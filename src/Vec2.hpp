@@ -17,7 +17,9 @@ class Vec2{
     Vec2<T> operator-(const Vec2&) const;
     Vec2<T> operator-=(const Vec2&);    
     Vec2<T> operator+=(const Vec2&);
-    bool operator==(const Vec2& v) const;
+    bool operator==(const Vec2&) const;
+    Vec2<T> operator/(const T&) const;
+    Vec2<T> operator/=(const T&);
 };
 
 
@@ -93,6 +95,23 @@ bool Vec2<T>::operator==(const Vec2& v) const {
     } else {
         return true;
     }
+}
+
+template <typename T>
+Vec2<T> Vec2<T>::operator/(const T& t) const {
+    Vec2<T> vRes;
+
+    vRes.x = x / t;
+    vRes.y = y / t;
+
+    return vRes;
+}
+
+template <typename T>
+Vec2<T> Vec2<T>::operator/=(const T& t) {
+    *this = *this / t;
+
+    return *this;
 }
 
 #endif
