@@ -6,7 +6,9 @@ int main(){
 
     Vec2<int> v1(6,6);
 
-    v == v1;
+    v *= 4;
+    v << std::cout << std::endl;
+    
 
     std::cout << "Done" << std::endl;
     return 0;

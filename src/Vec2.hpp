@@ -1,6 +1,8 @@
 #ifndef VEC2_HPP
 #define VEC2_HPP
 
+#include <iostream>
+
 template <typename T>
 class Vec2{
     T x;
@@ -20,6 +22,10 @@ class Vec2{
     bool operator==(const Vec2&) const;
     Vec2<T> operator/(const T&) const;
     Vec2<T> operator/=(const T&);
+    Vec2<T> operator*(const T&) const;
+    Vec2<T> operator*=(const T&);
+
+    std::ostream& operator<<(std::ostream&);
 };
 
 
@@ -112,6 +118,28 @@ Vec2<T> Vec2<T>::operator/=(const T& t) {
     *this = *this / t;
 
     return *this;
+}
+
+template <typename T>
+Vec2<T> Vec2<T>::operator*(const T& v) const {
+    Vec2<T> vRes;
+
+    vRes.x = x * v;
+    vRes.y = y * v;
+
+    return vRes;
+}
+
+template <typename T>
+Vec2<T> Vec2<T>::operator*=(const T& t){
+    *this = *this * t;
+    return *this;
+}
+
+template <typename T>
+std::ostream& Vec2<T>::operator<<(std::ostream& os){
+    os << "(" << this->x << "," << this->y << ")";
+    return os;
 }
 
 #endif
