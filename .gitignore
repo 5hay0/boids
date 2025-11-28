@@ -2,3 +2,4 @@ makefile
 .gitattributes
 obj/*
 boids
+unit_tests

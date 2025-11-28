@@ -1,8 +1,9 @@
+#include "src/Vec2.hpp"
 #include "src/Boid.hpp"
 
 int main(){
     Vec2<unit> v(5,4);
-    Vec2<unit> dir(1,1);
+    Vec2<unit> dir(1,0);
 
     Boid b = Boid(v, dir, 1, 4, 5);
     b.getPos() << std::cout << std::endl;
