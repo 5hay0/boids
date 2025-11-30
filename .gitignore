@@ -3,3 +3,4 @@ makefile
 obj/*
 boids
 unit_tests
+.vscode/*

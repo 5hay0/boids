@@ -9,7 +9,7 @@ protected:
 
     virtual void SetUp() {
         pos = Vec2<unit>(5, 7);
-        dir = Vec2<unit>(1, 0);
+        dir = Vec2<unit>(1, 1);
         b = Boid(pos, dir, 1, 4, 5);
     }
 
@@ -19,7 +19,7 @@ protected:
 
 
 TEST_F(BoidTest, update){
-    Vec2<unit> vRes(6,7);
+    Vec2<unit> vRes(5.707,7.707);
     b.update();
     ASSERT_EQ(b.getPos(),vRes);
 }

@@ -3,7 +3,7 @@
 
 int main(){
     Vec2<unit> v(5,4);
-    Vec2<unit> dir(1,0);
+    Vec2<unit> dir(1,1);
 
     Boid b = Boid(v, dir, 1, 4, 5);
     b.getPos() << std::cout << std::endl;
