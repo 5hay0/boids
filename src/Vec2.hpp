@@ -26,6 +26,11 @@ class Vec2{
     Vec2<T> operator*=(const T&);
 
     std::ostream& operator<<(std::ostream&);
+
+    T getX() const;
+    T getY() const;
+    void setX(const T&);
+    void setY(const T&);
 };
 
 
@@ -140,6 +145,26 @@ template <typename T>
 std::ostream& Vec2<T>::operator<<(std::ostream& os){
     os << "(" << this->x << "," << this->y << ")";
     return os;
+}
+
+template <typename T>
+T Vec2<T>::getX() const {
+    return x;
+}
+
+template <typename T>
+T Vec2<T>::getY() const {
+    return y;
+}
+
+template <typename T>
+void Vec2<T>::setX(const T& e) {
+    x = e;
+}
+
+template <typename T>
+void Vec2<T>::setY(const T& e) {
+    y = e;
 }
 
 #endif
