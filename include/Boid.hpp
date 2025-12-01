@@ -26,6 +26,7 @@ class Boid {
     unit getSpeed() const;
     unit getSpeedMax() const;
     unit getR() const;
+    bool operator==(const Boid&) const;
 };
 
 

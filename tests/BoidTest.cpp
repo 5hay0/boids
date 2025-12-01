@@ -47,3 +47,7 @@ TEST_F(BoidTest, boundsHigherLimit){
     ASSERT_EQ(vResPos, b.getPos());
     ASSERT_EQ(vResDir, b.getDir());
 }
+
+TEST_F(BoidTest, operatorEqual){
+    ASSERT_TRUE(pos == pos);
+}

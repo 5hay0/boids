@@ -79,3 +79,11 @@ unit Boid::getSpeedMax() const {
 unit Boid::getR() const {
     return r;
 }
+
+bool Boid::operator==(const Boid& b) const {
+    bool res = true;
+    if(pos != b.getPos() || dir != b.getDir() || speed != b.getSpeed() || speedMax != b.getSpeedMax() || r != b.getR()){
+        res = false;
+    }
+    return res;
+}

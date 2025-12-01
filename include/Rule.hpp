@@ -8,28 +8,27 @@
 class Rule {
     protected:
     double weight;
-    DynamicArray<Boid>* flock;
 
     public: 
-    virtual Vec2<double> apply() const = 0;
+    virtual Vec2<double> apply(const Boid&, const DynamicArray<Boid>) const = 0;
 };
 
 class Cohesion : public Rule {
     public:
     Cohesion();
-    Vec2<double> apply() const;
+    Vec2<double> apply(const Boid&, const DynamicArray<Boid>) const;
 };
 
 class Separation : public Rule {
     public:
     Separation();
-    Vec2<double> apply() const;
+    Vec2<double> apply(const Boid&, const DynamicArray<Boid>) const;
 };
 
 class Alignment : public Rule {
     public: 
     Alignment();
-    Vec2<double> apply() const;
+    Vec2<double> apply(const Boid&, const DynamicArray<Boid>) const;
 };
 
 #endif
