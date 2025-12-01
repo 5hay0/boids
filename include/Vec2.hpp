@@ -21,6 +21,8 @@ class Vec2{
     Vec2<T> operator+=(const Vec2&);
     bool operator==(const Vec2&) const;
     Vec2<T> operator/(const T&) const;
+    Vec2<T> operator/(const Vec2&) const;
+    Vec2<T> operator*(const Vec2&) const;
     Vec2<T> operator/=(const T&);
     Vec2<T> operator*(const T&) const;
     Vec2<T> operator*=(const T&);
@@ -165,6 +167,26 @@ void Vec2<T>::setX(const T& e) {
 template <typename T>
 void Vec2<T>::setY(const T& e) {
     y = e;
+}
+
+template <typename T>
+Vec2<T> Vec2<T>::operator/(const Vec2& v) const {
+    Vec2<T> res;
+
+    res.x = x / v.x;
+    res.y = y / v.y;
+
+    return res;
+}
+
+template <typename T>
+Vec2<T> Vec2<T>::operator*(const Vec2& v) const {
+    Vec2<T> res;
+
+    res.x = x * v.x;
+    res.y = y * v.y;
+
+    return res;
 }
 
 #endif

@@ -22,7 +22,8 @@ public:
     ~DynamicArray();
     void add(const T& value);
     void print();
-
+    int getSize() const;
+    T get(int) const;
 };
 
 template <typename T>
@@ -64,6 +65,19 @@ void DynamicArray<T>::print() {
     for (int i = 0; i<size;i++) {
         std::cout<<data[i]<<std::endl;
     }
+}
+
+template<typename T>
+int DynamicArray<T>::getSize() const {
+    return size;
+}
+
+template<typename T>
+T DynamicArray<T>::get(int i) const {
+    if(i < 0 || static_cast<size_t>(i) >= size){
+        throw std::out_of_range("DynamicArray out of range");
+    }
+    return data[i];
 }
 
 #endif //BLOIS_DYNAMICARRAY_HPP
