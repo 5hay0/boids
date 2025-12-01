@@ -1,5 +1,4 @@
-#include "src/Vec2.hpp"
-#include "src/Boid.hpp"
+#include "../include/Boid.hpp"
 
 int main(){
     Vec2<unit> v(5,4);

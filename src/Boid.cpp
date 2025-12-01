@@ -1,4 +1,4 @@
-#include "Boid.hpp"
+#include "../include/Boid.hpp"
 #include <cmath>
 #include "SFML/Graphics.hpp"
 

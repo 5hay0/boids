@@ -1,4 +1,4 @@
-#include "../src/Vec2.hpp"
+#include "../include/Vec2.hpp"
 #include <gtest/gtest.h>
 
 

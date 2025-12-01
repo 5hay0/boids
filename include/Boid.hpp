@@ -1,7 +1,7 @@
 #ifndef BOID_HPP
 #define BOID_HPP
 
-#include "Vec2.hpp"
+#include "../include/Vec2.hpp"
 
 typedef int unit;
 

@@ -1,4 +1,4 @@
-#include "../src/Boid.hpp"
+#include "../include/Boid.hpp"
 #include <gtest/gtest.h>
 
 class BoidTest : public ::testing::Test {
