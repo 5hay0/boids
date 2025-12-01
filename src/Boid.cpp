@@ -37,17 +37,21 @@ void Boid::update(){
 }
 
 void Boid::bounds(int width, int height){
-    if(pos.getX() >= (unit)width){
-        pos.setX(0);
+    if(pos.getX() > (unit)width){
+        pos.setX(width);
+        dir.setX(1);
     } 
     if(pos.getX() < 0){
-        pos.setX(width-1);
+        pos.setX(0);
+        dir.setX(0);
     }
-    if(pos.getY() >= (unit)height){
-        pos.setY(0);
+    if(pos.getY() > (unit)height){
+        pos.setY(height);
+        dir.setY(1);
     } 
     if(pos.getY() < 0){
-        pos.setY(height-1);
+        pos.setY(0);
+        dir.setX(0);
     }
 }
 
