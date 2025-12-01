@@ -19,7 +19,7 @@ protected:
 
 
 TEST_F(BoidTest, update){
-    Vec2<unit> vRes(5.707,7.707);
+    Vec2<unit> vRes(6,8);
     b.update();
     ASSERT_EQ(b.getPos(),vRes);
 }

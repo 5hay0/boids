@@ -3,7 +3,7 @@
 
 #include "Vec2.hpp"
 
-typedef double unit;
+typedef int unit;
 
 class Boid {
     Vec2<unit> pos;
