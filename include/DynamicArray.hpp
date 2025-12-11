@@ -18,6 +18,7 @@ private:
     void resize();
 
 public:
+    DynamicArray();
     DynamicArray(int inititialCapacity);
     ~DynamicArray();
     void add(const T& value);
@@ -25,6 +26,11 @@ public:
     int getSize() const;
     T get(int) const;
 };
+
+template <typename T>
+DynamicArray<T>::DynamicArray() : size(0), capacity(10) {
+    data = new T[capacity];
+}
 
 template <typename T>
 DynamicArray<T>::DynamicArray(int inititialCapacity): size(0),capacity(inititialCapacity) {
