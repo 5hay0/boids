@@ -2,13 +2,13 @@
 #include <cmath>
 #include "SFML/Graphics.hpp"
 
-Boid::Boid(): pos(Vec2<unit>()), dir(Vec2<unit>()), speed(0), speedMax(1), r(0){}
+bd::Boid::Boid(): pos(Vec2<unit>()), dir(Vec2<unit>()), speed(0), speedMax(1), r(0){}
 
-Boid::~Boid(){}
+bd::Boid::~Boid(){}
 
-Boid::Boid(const Boid& b) : pos(Vec2<unit>(b.pos)), dir(Vec2<unit>(b.dir)), speed(b.speed), speedMax(b.speedMax), r(b.r){}
+bd::Boid::Boid(const Boid& b) : pos(Vec2<unit>(b.pos)), dir(Vec2<unit>(b.dir)), speed(b.speed), speedMax(b.speedMax), r(b.r){}
 
-Boid::Boid(Vec2<unit> p, Vec2<unit> d, unit v, unit vM, unit ray) : pos(p), dir(d), speed(v), speedMax(vM), r(ray){
+bd::Boid::Boid(Vec2<unit> p, Vec2<unit> d, unit v, unit vM, unit ray) : pos(p), dir(d), speed(v), speedMax(vM), r(ray){
     unit rDir = std::sqrt(dir.getX() * dir.getX() + dir.getY() * dir.getY());
     if(rDir != 0){
         dir.setX(std::round((dir.getX()/rDir) * 1000.0) / 1000.0);
@@ -25,7 +25,7 @@ Boid::Boid(Vec2<unit> p, Vec2<unit> d, unit v, unit vM, unit ray) : pos(p), dir(
     }
 }
 
-Boid& Boid::operator=(const Boid& b){
+bd::Boid& bd::Boid::operator=(const Boid& b){
     if(this != &b){
         pos = b.pos;
         dir = b.dir;
@@ -36,12 +36,12 @@ Boid& Boid::operator=(const Boid& b){
     return *this;
 }
 
-void Boid::update(){
+void bd::Boid::update(){
     pos.setX(pos.getX() + dir.getX() * speed);
     pos.setY(pos.getY() + dir.getY() * speed);
 }
 
-void Boid::bounds(int width, int height){
+void bd::Boid::bounds(int width, int height){
     if(pos.getX() > (unit)width){
         pos.setX(width);
         dir.setX(1);
@@ -60,27 +60,27 @@ void Boid::bounds(int width, int height){
     }
 }
 
-Vec2<unit> Boid::getPos() const{
+Vec2<unit> bd::Boid::getPos() const{
     return pos;
 }
 
-Vec2<unit> Boid::getDir() const {
+Vec2<unit> bd::Boid::getDir() const {
     return dir;
 }
 
-unit Boid::getSpeed() const {
+unit bd::Boid::getSpeed() const {
     return speed;
 }
 
-unit Boid::getSpeedMax() const {
+unit bd::Boid::getSpeedMax() const {
     return speedMax;
 }
 
-unit Boid::getR() const {
+unit bd::Boid::getR() const {
     return r;
 }
 
-bool Boid::operator==(const Boid& b) const {
+bool bd::Boid::operator==(const Boid& b) const {
     bool res = true;
     if(pos != b.getPos() || dir != b.getDir() || speed != b.getSpeed() || speedMax != b.getSpeedMax() || r != b.getR()){
         res = false;

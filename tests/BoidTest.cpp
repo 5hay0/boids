@@ -5,12 +5,12 @@ class BoidTest : public ::testing::Test {
 protected:
     Vec2<unit> pos;
     Vec2<unit> dir;
-    Boid b;
+    bd::Boid b;
 
     virtual void SetUp() {
         pos = Vec2<unit>(5, 7);
         dir = Vec2<unit>(1, 1);
-        b = Boid(pos, dir, 1, 4, 5);
+        b = bd::Boid(pos, dir, 1, 4, 5);
     }
 
     virtual void TearDown() {
@@ -27,10 +27,10 @@ TEST_F(BoidTest, update){
 TEST_F(BoidTest, boundsLower0){
     Vec2<unit> pos;
     Vec2<unit> dir;
-    Boid b1;
+    bd::Boid b1;
     pos = Vec2<unit>(-1, -1);
     dir = Vec2<unit>(0, 1);
-    b1 = Boid(pos, dir, 1, 4, 5);
+    b1 = bd::Boid(pos, dir, 1, 4, 5);
 
     Vec2<unit> vRes(0,0);
     b1.bounds(5,5);

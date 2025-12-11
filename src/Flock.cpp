@@ -1,18 +1,18 @@
 #include "../include/Flock.hpp"
 
-Flock::Flock() : boids() {}
+bd::Flock::Flock() : boids() {}
 
-Flock::Flock(const int& nbBoids) : boids(nbBoids) {}
+bd::Flock::Flock(const int& nbBoids) : boids(nbBoids) {}
 
-void Flock::addBoid(const Boid& b){
+void bd::Flock::addBoid(const Boid& b){
     boids.add(b);
 }
 
-DynamicArray<Boid>& Flock::getBoids() {
+DynamicArray<bd::Boid>& bd::Flock::getBoids() {
     return boids;
 }
 
-DynamicArray<Boid> Flock::getNeighbours(const Boid& b) const {
+DynamicArray<bd::Boid> bd::Flock::getNeighbours(const Boid& b) const {
     DynamicArray<Boid> nei;
 
     for(size_t i = 0; i < boids.getSize(); i++){

@@ -1,11 +1,11 @@
 #include "../include/Rule.hpp"
 
 
-Cohesion::Cohesion() {
+bd::Cohesion::Cohesion() {
     weight = 0.01;
 }
 
-Cohesion::Cohesion(const double& w) {
+bd::Cohesion::Cohesion(const double& w) {
     weight = w;
     if(weight < 0){
         weight = 0;
@@ -15,7 +15,7 @@ Cohesion::Cohesion(const double& w) {
     }
 }
 
-Vec2<double> Cohesion::apply(const Boid& b, const Flock& f) const {
+Vec2<double> bd::Cohesion::apply(const Boid& b, const Flock& f) const {
     Vec2<double> vRes(0,0);
     int count = 0;
     DynamicArray<Boid> nei = f.getNeighbours(b);
@@ -44,11 +44,11 @@ Vec2<double> Cohesion::apply(const Boid& b, const Flock& f) const {
 }
 
 
-Separation::Separation() {
+bd::Separation::Separation() {
     weight = 0.05;
 }
 
-Separation::Separation(const double& w){
+bd::Separation::Separation(const double& w){
     weight = w;
     if(weight < 0){
         weight = 0;
@@ -58,7 +58,7 @@ Separation::Separation(const double& w){
     }
 }
 
-Vec2<double> Separation::apply(const Boid& b, const Flock& f) const {
+Vec2<double> bd::Separation::apply(const Boid& b, const Flock& f) const {
     Vec2<double> vRes(0,0);
     int count = 0;
     DynamicArray<Boid> nei = f.getNeighbours(b);
@@ -84,11 +84,11 @@ Vec2<double> Separation::apply(const Boid& b, const Flock& f) const {
     return vRes * weight;
 }
 
-Alignment::Alignment() {
+bd::Alignment::Alignment() {
     weight = 0.125;
 }
 
-Alignment::Alignment(const double& w) {
+bd::Alignment::Alignment(const double& w) {
     weight = w;
     if(weight < 0){
         weight = 0;
@@ -98,7 +98,7 @@ Alignment::Alignment(const double& w) {
     }
 }
 
-Vec2<double> Alignment::apply(const Boid& b, const Flock& f) const {
+Vec2<double> bd::Alignment::apply(const Boid& b, const Flock& f) const {
     Vec2<double> vRes(0,0);
     int count = 0;
     DynamicArray<Boid> nei = f.getNeighbours(b);
