@@ -8,10 +8,10 @@ class RuleTest : public ::testing::Test {
     DynamicArray<bd::Boid> neigh;
 
     virtual void SetUp(){
-        center = bd::Boid(Vec2<double>(0,0), Vec2<double>(1,0), 1, 10, 0);
+        center = bd::Boid(Vec2<unit>(0,0), Vec2<unit>(1,0), 1, 10, 0);
 
-        n1 = bd::Boid(Vec2<double>(3,4), Vec2<double>(0,1), 1, 10, 0);
-        n2 = bd::Boid(Vec2<double>(-2,1), Vec2<double>(0,-1), 1, 10, 0);
+        n1 = bd::Boid(Vec2<unit>(3,4), Vec2<unit>(0,1), 1, 10, 0);
+        n2 = bd::Boid(Vec2<unit>(-2,1), Vec2<unit>(0,-1), 1, 10, 0);
 
         neigh.add(center);
         neigh.add(n1);
