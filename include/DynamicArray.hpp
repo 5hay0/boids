@@ -18,13 +18,20 @@ private:
     void resize();
 
 public:
+    DynamicArray();
     DynamicArray(int inititialCapacity);
     ~DynamicArray();
     void add(const T& value);
     void print();
-    int getSize() const;
-    T get(int) const;
+    size_t getSize() const;
+    T& get(size_t);
+    const T& get(size_t) const;
 };
+
+template <typename T>
+DynamicArray<T>::DynamicArray() : size(0), capacity(10) {
+    data = new T[capacity];
+}
 
 template <typename T>
 DynamicArray<T>::DynamicArray(int inititialCapacity): size(0),capacity(inititialCapacity) {
@@ -44,7 +51,7 @@ void DynamicArray<T>::resize() {
     capacity *= 2;
     T* newData = new T[capacity];
 
-    for (int i =0; i<size;i++) {
+    for (size_t i =0; i<size;i++) {
         newData[i] = data[i];
     }
     delete[] data;
@@ -53,7 +60,7 @@ void DynamicArray<T>::resize() {
 
 template<typename T>
 void DynamicArray<T>::add(const T &value) {
-    if (size == capacity) {
+    if (size >= capacity) {
         resize();
         std::cout<<"DynamicArray resized"<<std::endl;
     }
@@ -68,13 +75,21 @@ void DynamicArray<T>::print() {
 }
 
 template<typename T>
-int DynamicArray<T>::getSize() const {
+size_t DynamicArray<T>::getSize() const {
     return size;
 }
 
 template<typename T>
-T DynamicArray<T>::get(int i) const {
-    if(i < 0 || static_cast<size_t>(i) >= size){
+T& DynamicArray<T>::get(size_t i) {
+    if(i >= size){
+        throw std::out_of_range("DynamicArray out of range");
+    }
+    return data[i];
+}
+
+template<typename T>
+const T& DynamicArray<T>::get(size_t i) const {
+    if(i >= size){
         throw std::out_of_range("DynamicArray out of range");
     }
     return data[i];

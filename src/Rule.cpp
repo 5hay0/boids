@@ -15,10 +15,14 @@ Cohesion::Cohesion(const double& w) {
     }
 }
 
-Vec2<double> Cohesion::apply(const Boid& b, const DynamicArray<Boid> nei) const {
+Vec2<double> Cohesion::apply(const Boid& b, const Flock& f) const {
     Vec2<double> vRes(0,0);
     int count = 0;
-    for(int i = 1; i < nei.getSize(); i++){
+    DynamicArray<Boid> nei = f.getNeighbours(b);
+    if(nei.getSize() == 0){
+        return Vec2<double>(0,0);
+    }
+    for(size_t i = 0; i < nei.getSize(); i++){
         if(nei.get(i) == b){
             continue;
         }
@@ -34,7 +38,7 @@ Vec2<double> Cohesion::apply(const Boid& b, const DynamicArray<Boid> nei) const 
         return Vec2<double>(0,0);
     }
 
-    vRes /= nei.getSize();
+    vRes /= count;
 
     return vRes * weight;
 }
@@ -54,10 +58,14 @@ Separation::Separation(const double& w){
     }
 }
 
-Vec2<double> Separation::apply(const Boid& b, const DynamicArray<Boid> nei) const {
+Vec2<double> Separation::apply(const Boid& b, const Flock& f) const {
     Vec2<double> vRes(0,0);
     int count = 0;
-    for(int i = 0; i < nei.getSize();i++){
+    DynamicArray<Boid> nei = f.getNeighbours(b);
+    if(nei.getSize() == 0){
+        return Vec2<double>(0,0);
+    }
+    for(size_t i = 0; i < nei.getSize();i++){
         if(nei.get(i) == b){
             continue;
         }
@@ -90,10 +98,14 @@ Alignment::Alignment(const double& w) {
     }
 }
 
-Vec2<double> Alignment::apply(const Boid& b, const DynamicArray<Boid> nei) const {
+Vec2<double> Alignment::apply(const Boid& b, const Flock& f) const {
     Vec2<double> vRes(0,0);
     int count = 0;
-    for(int i = 0; i < nei.getSize();i++){
+    DynamicArray<Boid> nei = f.getNeighbours(b);
+    if(nei.getSize() == 0){
+        return Vec2<double>(0,0);
+    }
+    for(size_t i = 0; i < nei.getSize();i++){
         if(nei.get(i) == b){
             continue;
         }
@@ -112,7 +124,7 @@ Vec2<double> Alignment::apply(const Boid& b, const DynamicArray<Boid> nei) const
         return Vec2<double>(0,0);
     }
 
-    vRes /= nei.getSize();
+    vRes /= count;
 
     return vRes * weight;
 }
