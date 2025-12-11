@@ -5,6 +5,16 @@ Cohesion::Cohesion() {
     weight = 0.01;
 }
 
+Cohesion::Cohesion(const double& w) {
+    weight = w;
+    if(weight < 0){
+        weight = 0;
+    } 
+    if(weight > 1){
+        weight = 1;
+    }
+}
+
 Vec2<double> Cohesion::apply(const Boid& b, const DynamicArray<Boid> nei) const {
     Vec2<double> vRes(0,0);
     int count = 0;
@@ -34,6 +44,16 @@ Separation::Separation() {
     weight = 0.05;
 }
 
+Separation::Separation(const double& w){
+    weight = w;
+    if(weight < 0){
+        weight = 0;
+    } 
+    if(weight > 1){
+        weight = 1;
+    }
+}
+
 Vec2<double> Separation::apply(const Boid& b, const DynamicArray<Boid> nei) const {
     Vec2<double> vRes(0,0);
     int count = 0;
@@ -58,6 +78,16 @@ Vec2<double> Separation::apply(const Boid& b, const DynamicArray<Boid> nei) cons
 
 Alignment::Alignment() {
     weight = 0.125;
+}
+
+Alignment::Alignment(const double& w) {
+    weight = w;
+    if(weight < 0){
+        weight = 0;
+    } 
+    if(weight > 1){
+        weight = 1;
+    }
 }
 
 Vec2<double> Alignment::apply(const Boid& b, const DynamicArray<Boid> nei) const {

@@ -16,18 +16,21 @@ class Rule {
 class Cohesion : public Rule {
     public:
     Cohesion();
+    Cohesion(const double&);
     Vec2<double> apply(const Boid&, const DynamicArray<Boid>) const;
 };
 
 class Separation : public Rule {
     public:
     Separation();
+    Separation(const double&);
     Vec2<double> apply(const Boid&, const DynamicArray<Boid>) const;
 };
 
 class Alignment : public Rule {
     public: 
     Alignment();
+    Alignment(const double&);
     Vec2<double> apply(const Boid&, const DynamicArray<Boid>) const;
 };
 
