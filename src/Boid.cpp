@@ -9,6 +9,11 @@ Boid::~Boid(){}
 Boid::Boid(const Boid& b) : pos(Vec2<unit>(b.pos)), dir(Vec2<unit>(b.dir)), speed(b.speed), speedMax(b.speedMax), r(b.r){}
 
 Boid::Boid(Vec2<unit> p, Vec2<unit> d, unit v, unit vM, unit ray) : pos(p), dir(d), speed(v), speedMax(vM), r(ray){
+    unit rDir = std::sqrt(dir.getX() * dir.getX() + dir.getY() * dir.getY());
+    if(rDir != 0){
+        dir.setX(std::round((dir.getX()/rDir) * 1000.0) / 1000.0);
+        dir.setY(std::round((dir.getY()/rDir) * 1000.0) / 1000.0);
+    }
     if(speed < 0){
         speed = 0;
     }
@@ -73,4 +78,12 @@ unit Boid::getSpeedMax() const {
 
 unit Boid::getR() const {
     return r;
+}
+
+bool Boid::operator==(const Boid& b) const {
+    bool res = true;
+    if(pos != b.getPos() || dir != b.getDir() || speed != b.getSpeed() || speedMax != b.getSpeedMax() || r != b.getR()){
+        res = false;
+    }
+    return res;
 }

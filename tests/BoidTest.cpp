@@ -9,7 +9,7 @@ protected:
 
     virtual void SetUp() {
         pos = Vec2<unit>(5, 7);
-        dir = Vec2<unit>(0, 1);
+        dir = Vec2<unit>(1, 1);
         b = Boid(pos, dir, 1, 4, 5);
     }
 
@@ -19,7 +19,7 @@ protected:
 
 
 TEST_F(BoidTest, update){
-    Vec2<unit> vRes(5,8);
+    Vec2<unit> vRes(5.707,7.707);
     b.update();
     ASSERT_EQ(b.getPos(),vRes);
 }
@@ -46,4 +46,8 @@ TEST_F(BoidTest, boundsHigherLimit){
 
     ASSERT_EQ(vResPos, b.getPos());
     ASSERT_EQ(vResDir, b.getDir());
+}
+
+TEST_F(BoidTest, operatorEqual){
+    ASSERT_TRUE(pos == pos);
 }

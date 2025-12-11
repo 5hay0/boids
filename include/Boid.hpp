@@ -3,7 +3,7 @@
 
 #include "../include/Vec2.hpp"
 
-typedef int unit;
+typedef double unit;
 
 class Boid {
     Vec2<unit> pos;
@@ -26,6 +26,7 @@ class Boid {
     unit getSpeed() const;
     unit getSpeedMax() const;
     unit getR() const;
+    bool operator==(const Boid&) const;
 };
 
 
