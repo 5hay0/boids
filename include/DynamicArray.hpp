@@ -24,7 +24,8 @@ public:
     void add(const T& value);
     void print();
     size_t getSize() const;
-    T get(int) const;
+    T& get(size_t);
+    const T& get(size_t) const;
 };
 
 template <typename T>
@@ -59,7 +60,7 @@ void DynamicArray<T>::resize() {
 
 template<typename T>
 void DynamicArray<T>::add(const T &value) {
-    if (size == capacity) {
+    if (size >= capacity) {
         resize();
         std::cout<<"DynamicArray resized"<<std::endl;
     }
@@ -79,8 +80,16 @@ size_t DynamicArray<T>::getSize() const {
 }
 
 template<typename T>
-T DynamicArray<T>::get(int i) const {
-    if(i < 0 || static_cast<size_t>(i) >= size){
+T& DynamicArray<T>::get(size_t i) {
+    if(i >= size){
+        throw std::out_of_range("DynamicArray out of range");
+    }
+    return data[i];
+}
+
+template<typename T>
+const T& DynamicArray<T>::get(size_t i) const {
+    if(i >= size){
         throw std::out_of_range("DynamicArray out of range");
     }
     return data[i];

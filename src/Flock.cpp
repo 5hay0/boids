@@ -1,6 +1,6 @@
 #include "../include/Flock.hpp"
 
-Flock::Flock() {}
+Flock::Flock() : boids() {}
 
 Flock::Flock(const int& nbBoids) : boids(nbBoids) {}
 
@@ -16,16 +16,18 @@ DynamicArray<Boid> Flock::getNeighbours(const Boid& b) const {
     DynamicArray<Boid> nei;
 
     for(size_t i = 0; i < boids.getSize(); i++){
-        if(nei.get(i) == b){
+        const Boid& other = boids.get(i);
+
+        if(other == b){
             continue;
         }
 
-        double dx = boids.get(i).getPos().getX() - b.getPos().getX();
-        double dy = boids.get(i).getPos().getY() - b.getPos().getY();
+        double dx = other.getPos().getX() - b.getPos().getX();
+        double dy = other.getPos().getY() - b.getPos().getY();
         double dist2 = dx*dx + dy*dy;
 
         if (dist2 < b.getR() * b.getR()) {
-            nei.add(boids.get(i));
+            nei.add(other);
         }
     }
 

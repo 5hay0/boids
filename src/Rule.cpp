@@ -20,7 +20,7 @@ Vec2<double> Cohesion::apply(const Boid& b, const Flock& f) const {
     int count = 0;
     DynamicArray<Boid> nei = f.getNeighbours(b);
     if(nei.getSize() == 0){
-        return vRes;
+        return Vec2<double>(0,0);
     }
     for(size_t i = 0; i < nei.getSize(); i++){
         if(nei.get(i) == b){
@@ -63,7 +63,7 @@ Vec2<double> Separation::apply(const Boid& b, const Flock& f) const {
     int count = 0;
     DynamicArray<Boid> nei = f.getNeighbours(b);
     if(nei.getSize() == 0){
-        return vRes;
+        return Vec2<double>(0,0);
     }
     for(size_t i = 0; i < nei.getSize();i++){
         if(nei.get(i) == b){
@@ -103,7 +103,7 @@ Vec2<double> Alignment::apply(const Boid& b, const Flock& f) const {
     int count = 0;
     DynamicArray<Boid> nei = f.getNeighbours(b);
     if(nei.getSize() == 0){
-        return vRes;
+        return Vec2<double>(0,0);
     }
     for(size_t i = 0; i < nei.getSize();i++){
         if(nei.get(i) == b){
