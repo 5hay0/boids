@@ -12,7 +12,7 @@ class Flock {
     Flock(const int&);
     void addBoid(const Boid&);
     DynamicArray<Boid>& getBoids();
-    DynamicArray<Boid>& getNeighbours(const Boid&) const;
+    DynamicArray<Boid> getNeighbours(const Boid&) const;
 };
 
 #endif

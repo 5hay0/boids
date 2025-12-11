@@ -23,7 +23,7 @@ public:
     ~DynamicArray();
     void add(const T& value);
     void print();
-    int getSize() const;
+    size_t getSize() const;
     T get(int) const;
 };
 
@@ -50,7 +50,7 @@ void DynamicArray<T>::resize() {
     capacity *= 2;
     T* newData = new T[capacity];
 
-    for (int i =0; i<size;i++) {
+    for (size_t i =0; i<size;i++) {
         newData[i] = data[i];
     }
     delete[] data;
@@ -74,7 +74,7 @@ void DynamicArray<T>::print() {
 }
 
 template<typename T>
-int DynamicArray<T>::getSize() const {
+size_t DynamicArray<T>::getSize() const {
     return size;
 }
 

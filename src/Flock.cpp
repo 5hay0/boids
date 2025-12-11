@@ -12,7 +12,7 @@ DynamicArray<Boid>& Flock::getBoids() {
     return boids;
 }
 
-DynamicArray<Boid>& Flock::getNeighbours(const Boid& b) const {
+DynamicArray<Boid> Flock::getNeighbours(const Boid& b) const {
     DynamicArray<Boid> nei;
 
     for(size_t i = 0; i < boids.getSize(); i++){
