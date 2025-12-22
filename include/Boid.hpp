@@ -3,7 +3,7 @@
 
 #include "../include/Vec2.hpp"
 
-typedef double unit;
+typedef float unit;
 
 namespace bd {
     
