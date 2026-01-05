@@ -27,6 +27,7 @@ DynamicArray<bd::Boid> bd::Flock::getNeighbours(const Boid& b) const {
         double dist2 = dx*dx + dy*dy;
 
         if (dist2 < b.getR() * b.getR()) {
+            //other.getPos()<<(std::cout<<"getNeighbours, other pos:");
             nei.add(other);
         }
     }

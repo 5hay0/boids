@@ -87,3 +87,14 @@ bool bd::Boid::operator==(const Boid& b) const {
     }
     return res;
 }
+
+void bd::Boid::setPos(const Vec2<unit> &v) {
+    this->pos = v;
+}
+
+void bd::Boid::setSpeed(const unit &s) {
+    if (s<0) this->speed = 0;
+    else if (s>this->getSpeedMax()) this->speed = getSpeedMax();
+    else this->speed = s;
+}
+

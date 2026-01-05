@@ -16,30 +16,26 @@ bd::Cohesion::Cohesion(const double& w) {
 }
 
 Vec2<unit> bd::Cohesion::apply(const Boid& b, const Flock& f) const {
-    Vec2<unit> vRes(0,0);
-    int count = 0;
+    Vec2<unit> vRes(0.f,0.f);
     DynamicArray<Boid> nei = f.getNeighbours(b);
-    if(nei.getSize() == 0){
-        return Vec2<unit>(0,0);
-    }
-    for(size_t i = 0; i < nei.getSize(); i++){
-        if(nei.get(i) == b){
-            continue;
-        }
-        Vec2<unit> vTmp = nei.get(i).getPos() - b.getPos();
-        double dist2 = vTmp.getX()* vTmp.getX() + vTmp.getY()* vTmp.getY();
 
-        if (dist2 < b.getR() * b.getR()) {
-            vRes += vTmp;
-            count++;
-        }
-    }
+    int count = nei.getSize();
+
+    //b.getPos()<<(std::cout<<"Cohesion, b val:");
+
     if(count == 0){
-        return Vec2<unit>(0,0);
+        //std::cout<<"Cohesion, rentre dans size ==0";
+        return vRes;
+    }
+    for(size_t i = 0; i < count; i++){
+        Vec2<unit> vTmp = nei.get(i).getPos() - b.getPos();
+        //vTmp<<(std::cout<<"Cohesion, vTmp val:");
+        vRes += vTmp;
+        //std::cout<<"Cohesion, add voisin";
     }
 
     vRes /= count;
-
+    //vRes<<(std::cout<<"Cohesion, vRes/count:");
     return vRes * weight;
 }
 

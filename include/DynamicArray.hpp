@@ -20,6 +20,10 @@ private:
 public:
     DynamicArray();
     DynamicArray(int inititialCapacity);
+
+    DynamicArray(const DynamicArray& other);
+    DynamicArray& operator=(const DynamicArray& other);
+
     ~DynamicArray();
     void add(const T& value);
     void print();
@@ -40,6 +44,32 @@ DynamicArray<T>::DynamicArray(int inititialCapacity): size(0),capacity(inititial
     }
     data = new T[capacity];
 }
+
+template<typename T>
+DynamicArray<T>::DynamicArray(const DynamicArray &other): size(other.size), capacity(other.capacity) {
+    data = new T[capacity];  // Allocation de mémoire pour la nouvelle instance
+
+    for (size_t i = 0; i < size; ++i) {
+        data[i] = other.data[i];  // Copie des éléments un par un
+    }
+}
+
+template<typename T>
+DynamicArray<T> &DynamicArray<T>::operator=(const DynamicArray &other) {
+    if (this != &other) {  // Empêcher l'auto-assignation
+        delete[] data;  // Libérer la mémoire précédente
+
+        size = other.size;
+        capacity = other.capacity;
+        data = new T[capacity];  // Nouvelle allocation mémoire
+
+        for (size_t i = 0; i < size; ++i) {
+            data[i] = other.data[i];  // Copie des éléments
+        }
+    }
+    return *this;
+}
+
 
 template <typename T>
 DynamicArray<T>::~DynamicArray() {

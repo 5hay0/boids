@@ -7,29 +7,29 @@
 namespace bd {
 
     class Rule {
-        protected:
+    protected:
         double weight;
 
-        public: 
+    public:
         virtual Vec2<unit> apply(const Boid&, const Flock&) const = 0;
     };
 
     class Cohesion : public Rule {
-        public:
+    public:
         Cohesion();
         Cohesion(const double&);
         Vec2<unit> apply(const Boid&, const Flock&) const;
     };
 
     class Separation : public Rule {
-        public:
+    public:
         Separation();
         Separation(const double&);
         Vec2<unit> apply(const Boid&, const Flock&) const;
     };
 
     class Alignment : public Rule {
-        public: 
+    public:
         Alignment();
         Alignment(const double&);
         Vec2<unit> apply(const Boid&, const Flock&) const;

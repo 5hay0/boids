@@ -12,7 +12,9 @@ namespace bd {
         Vec2<unit> dir;
         unit speed;
         unit speedMax;
-        unit r;
+        unit r; //rayon de perception
+
+        //Discuter accélération max
 
         public:
         Boid();
@@ -29,6 +31,8 @@ namespace bd {
         unit getSpeedMax() const;
         unit getR() const;
         bool operator==(const Boid&) const;
+        void setPos(const Vec2<unit> &v);
+        void setSpeed(const unit &s);
     };
 }
 

@@ -12,6 +12,7 @@ namespace bd {
         public:
         Flock();
         Flock(const int&);
+        //Le destructeur ?
         void addBoid(const Boid&);
         DynamicArray<Boid>& getBoids();
         DynamicArray<Boid> getNeighbours(const Boid&) const;
