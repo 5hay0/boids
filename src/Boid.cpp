@@ -98,3 +98,7 @@ void bd::Boid::setSpeed(const unit &s) {
     else this->speed = s;
 }
 
+void bd::Boid::setDir(const Vec2<unit> &v) {
+    this->dir = v;
+}
+

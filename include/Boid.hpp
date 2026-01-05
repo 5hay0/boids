@@ -33,6 +33,7 @@ namespace bd {
         bool operator==(const Boid&) const;
         void setPos(const Vec2<unit> &v);
         void setSpeed(const unit &s);
+        void setDir(const Vec2<unit> &v);
     };
 }
 
