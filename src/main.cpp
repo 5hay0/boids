@@ -1,20 +1,19 @@
-#include "../include/Rule.hpp"
+#include "include/Settings.hpp"
 
-int main(){
-    Vec2<unit> v(5,4);
-    Vec2<unit> dir(1,1);
+#include "Simulation.hpp"
 
-    bd::Boid b = bd::Boid(v, dir, 1, 4, 5);
-    bd::Flock f = bd::Flock();
-    std::cout << f.getBoids().getSize() << std::endl;
-    f.addBoid(b);
-    std::cout << f.getBoids().getSize() << std::endl;
 
-    bd::Cohesion c = bd::Cohesion();
-    bd::Alignment a = bd::Alignment();
-    bd::Separation s = bd::Separation();
-    c.apply(b,f);
-    a.apply(b,f);
-    s.apply(b,f);
+using namespace bd;
+
+
+
+int main() {
+
+    //TODO : give the possibility to change default settings
+    Settings settings = Settings();
+    Simulation simulation = Simulation(settings);
+
+    simulation.drawSimulation();
+
     return 0;
 }
