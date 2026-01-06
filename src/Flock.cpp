@@ -1,8 +1,11 @@
 #include "../include/Flock.hpp"
 
-bd::Flock::Flock() : boids() {}
+bd::Flock::Flock() : boids(), distance(50), boid_r(50) {}
 
-bd::Flock::Flock(const int& nbBoids) : boids(nbBoids) {}
+bd::Flock::Flock(const int& nbBoids, const unit& d, const unit& b_r) : boids(nbBoids) {
+    this->distance = d;
+    this-> boid_r = b_r;
+}
 
 void bd::Flock::addBoid(const Boid& b){
     boids.add(b);
@@ -34,3 +37,28 @@ DynamicArray<bd::Boid> bd::Flock::getNeighbours(const Boid& b) const {
 
     return nei;
 }
+
+unit bd::Flock::getDistance() const {
+    return this->distance;
+}
+
+void bd::Flock::addDistance(unit d) {
+    if (distance+d < 51 && distance +d > 4) {
+        distance += d;
+    }
+}
+
+unit bd::Flock::getR() const {
+    return this->boid_r;
+}
+
+void bd::Flock::addR(unit d) {
+    if (((boid_r+d) < 101) && ((boid_r+d) > 9)) {
+        boid_r += d;
+        for (int i = 0; i< this->getBoids().getSize(); i++) {
+            this->getBoids().get(i).setR(getR());
+        }
+    }
+}
+
+

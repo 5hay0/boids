@@ -2,11 +2,11 @@
 #include <cmath>
 #include "SFML/Graphics.hpp"
 
-bd::Boid::Boid(): pos(Vec2<unit>()), dir(Vec2<unit>()), speed(0), speedMax(1), r(0){}
+bd::Boid::Boid(): pos(Vec2<unit>()), dir(Vec2<unit>()), speed(0), speedMax(1), r(0), fear(0), bordure_x(0), bordure_y(0){}
 
 bd::Boid::~Boid(){}
 
-bd::Boid::Boid(const Boid& b) : pos(Vec2<unit>(b.pos)), dir(Vec2<unit>(b.dir)), speed(b.speed), speedMax(b.speedMax), r(b.r){}
+bd::Boid::Boid(const Boid& b) : pos(Vec2<unit>(b.pos)), dir(Vec2<unit>(b.dir)), speed(b.speed), speedMax(b.speedMax), r(b.r), fear(b.fear), bordure_x(b.bordure_x), bordure_y(b.bordure_y){}
 
 bd::Boid::Boid(Vec2<unit> p, Vec2<unit> d, unit v, unit vM, unit ray) : pos(p), dir(d), speed(v), speedMax(vM), r(ray){
     unit rDir = std::sqrt(dir.getX() * dir.getX() + dir.getY() * dir.getY());
@@ -23,6 +23,10 @@ bd::Boid::Boid(Vec2<unit> p, Vec2<unit> d, unit v, unit vM, unit ray) : pos(p), 
     if(speed > speedMax){
         speed = speedMax;
     }
+
+    bordure_x = 0;
+    bordure_y = 0;
+    fear = 0;
 }
 
 bd::Boid& bd::Boid::operator=(const Boid& b){
@@ -32,6 +36,9 @@ bd::Boid& bd::Boid::operator=(const Boid& b){
         speed = b.speed;
         speedMax = b.speedMax;
         r = b.r;
+        fear = b.fear;
+        bordure_x = b.bordure_x;
+        bordure_y = b.bordure_y;
     }
     return *this;
 }
@@ -101,4 +108,35 @@ void bd::Boid::setSpeed(const unit &s) {
 void bd::Boid::setDir(const Vec2<unit> &v) {
     this->dir = v;
 }
+
+int bd::Boid::getBordureX() {
+    return bordure_x;
+}
+
+int bd::Boid::getBordureY() {
+    return bordure_y;
+}
+
+int bd::Boid::getFear() {
+    return fear;
+}
+
+void bd::Boid::addBordureX(const int &b) {
+    bordure_x += b;
+}
+
+void bd::Boid::addBordureY(const int &b) {
+    bordure_y += b;
+}
+
+void bd::Boid::addFear(const int &f) {
+    fear += f;
+}
+
+void bd::Boid::setR(unit newR) {
+    this->r = newR;
+}
+
+
+
 

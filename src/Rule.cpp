@@ -21,21 +21,15 @@ Vec2<unit> bd::Cohesion::apply(const Boid& b, const Flock& f) const {
 
     int count = nei.getSize();
 
-    //b.getPos()<<(std::cout<<"Cohesion, b val:");
-
     if(count == 0){
-        //std::cout<<"Cohesion, rentre dans size ==0";
         return vRes;
     }
     for(size_t i = 0; i < count; i++){
         Vec2<unit> vTmp = nei.get(i).getPos() - b.getPos();
-        //vTmp<<(std::cout<<"Cohesion, vTmp val:");
         vRes += vTmp;
-        //std::cout<<"Cohesion, add voisin";
     }
-
     vRes /= count;
-    //vRes<<(std::cout<<"Cohesion, vRes/count:");
+
     return vRes * weight;
 }
 
@@ -56,25 +50,34 @@ bd::Separation::Separation(const double& w){
 
 Vec2<unit> bd::Separation::apply(const Boid& b, const Flock& f) const {
     Vec2<unit> vRes(0,0);
-    int count = 0;
+
     DynamicArray<Boid> nei = f.getNeighbours(b);
-    if(nei.getSize() == 0){
-        return Vec2<unit>(0,0);
+    int countTotal = nei.getSize();
+    int count = 0;
+
+    if(countTotal == 0){
+        return vRes;
     }
     for(size_t i = 0; i < nei.getSize();i++){
-        if(nei.get(i) == b){
-            continue;
-        }
         Vec2<unit> diff = b.getPos() - nei.get(i).getPos();
         double dist2 = diff.getX()*diff.getX() + diff.getY()*diff.getY();
+        double dist = sqrt(dist2);
 
-        if (dist2 < b.getR() * b.getR() && dist2 > 0) {
-            vRes += diff / dist2;
-            count++;
+        if (dist < f.getDistance() && dist > 0) {
+            vRes += diff / dist;
+            count += 1;
         }
     }
-    if(count == 0){
-        return Vec2<unit>(0,0);
+    //normalisation
+    double len = sqrt(vRes.getX()*vRes.getX() + vRes.getY()*vRes.getY());
+
+    if (count == 0) {
+        // on a aucun voisin trop proche
+        return vRes;
+    }
+    vRes /= count;
+    if (len > 0) {
+        vRes = vRes / len;
     }
 
     return vRes * weight;
@@ -95,32 +98,37 @@ bd::Alignment::Alignment(const double& w) {
 }
 
 Vec2<unit> bd::Alignment::apply(const Boid& b, const Flock& f) const {
+
     Vec2<unit> vRes(0,0);
     int count = 0;
+
     DynamicArray<Boid> nei = f.getNeighbours(b);
+
     if(nei.getSize() == 0){
         return Vec2<unit>(0,0);
     }
-    for(size_t i = 0; i < nei.getSize();i++){
-        if(nei.get(i) == b){
-            continue;
-        }
-        Vec2<unit> diff = nei.get(i).getDir() - b.getDir();
-        double dist2 = (nei.get(i).getPos().getX() - b.getPos().getX()) *
-                       (nei.get(i).getPos().getX() - b.getPos().getX()) +
-                       (nei.get(i).getPos().getY() - b.getPos().getY()) *
-                       (nei.get(i).getPos().getY() - b.getPos().getY());
 
-        if (dist2 < b.getR()*b.getR()) {
-            vRes += diff;
+    for(size_t i = 0; i < nei.getSize(); i++){
+        double dx = nei.get(i).getPos().getX() - b.getPos().getX();
+        double dy = nei.get(i).getPos().getY() - b.getPos().getY();
+        double dist2 = dx*dx + dy*dy;
+
+        if (dist2 > 0 && dist2 < f.getDistance()*f.getDistance()) {
+            vRes += nei.get(i).getDir();
             count++;
         }
     }
-    if(count == 0){
-        return Vec2<unit>(0,0);
-    }
 
+    if (count == 0)
+        return Vec2<unit>(0,0);
+
+    //moyenne
     vRes /= count;
+
+    //normalisation
+    double len = sqrt(vRes.getX()*vRes.getX() + vRes.getY()*vRes.getY());
+    if (len > 0)
+        vRes = vRes / len;
 
     return vRes * weight;
 }

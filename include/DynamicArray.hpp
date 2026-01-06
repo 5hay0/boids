@@ -30,6 +30,8 @@ public:
     size_t getSize() const;
     T& get(size_t);
     const T& get(size_t) const;
+
+    void removeLast();
 };
 
 template <typename T>
@@ -92,9 +94,10 @@ template<typename T>
 void DynamicArray<T>::add(const T &value) {
     if (size >= capacity) {
         resize();
-        std::cout<<"DynamicArray resized"<<std::endl;
     }
-    data[size++] = value;
+    data[size] = value;
+    size = size+1;
+
 }
 
 template<typename T>
@@ -124,5 +127,20 @@ const T& DynamicArray<T>::get(size_t i) const {
     }
     return data[i];
 }
+
+template<typename T>
+void DynamicArray<T>::removeLast() {
+    if (size > 0) { // cannot delete something that does not exist
+        T* newData = new T[capacity];
+
+        for (size_t i =0; i<size-1;i++) {
+            newData[i] = data[i];
+        }
+        delete[] data;
+        data = newData;
+        size = size-1;
+    }
+}
+
 
 #endif //BLOIS_DYNAMICARRAY_HPP

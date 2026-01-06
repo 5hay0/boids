@@ -14,6 +14,10 @@ namespace bd {
         unit speedMax;
         unit r; //rayon de perception
 
+        int bordure_x; //nb frame pour forcer le boid à s'éloigner des bordures
+        int bordure_y;
+        int fear; // nb frame où le boid fuit le prédateur
+
         //Discuter accélération max
 
         public:
@@ -34,6 +38,14 @@ namespace bd {
         void setPos(const Vec2<unit> &v);
         void setSpeed(const unit &s);
         void setDir(const Vec2<unit> &v);
+
+        void addBordureX(const int &b);
+        void addBordureY(const int &b);
+        void addFear(const int &f);
+        int getBordureX();
+        int getBordureY();
+        int getFear();
+        void setR(unit newR);
     };
 }
 

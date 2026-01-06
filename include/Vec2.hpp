@@ -17,13 +17,13 @@ class Vec2{
     Vec2<T>& operator=(const Vec2&);
     Vec2<T> operator+(const Vec2&) const;
     Vec2<T> operator-(const Vec2&) const;
-    Vec2<T> operator-=(const Vec2&);    
-    Vec2<T> operator+=(const Vec2&);
+    Vec2<T>& operator-=(const Vec2&);
+    Vec2<T>& operator+=(const Vec2&);
     bool operator==(const Vec2&) const;
     Vec2<T> operator/(const T&) const;
-    Vec2<T> operator/=(const T&);
+    Vec2<T>& operator/=(const T&);
     Vec2<T> operator*(const T&) const;
-    Vec2<T> operator*=(const T&);
+    Vec2<T>& operator*=(const T&);
 
     std::ostream& operator<<(std::ostream&);
 
@@ -49,7 +49,7 @@ Vec2<T>::Vec2(const Vec2& v) : x(v.x), y(v.y){}
 
 template <typename T>
 bool Vec2<T>::operator!=(const Vec2& v) const{
-    if(v.x != x && v.y != y){
+    if(v.x != x || v.y != y){
         return true;
     } else {
         return false;
@@ -86,14 +86,14 @@ Vec2<T> Vec2<T>::operator-(const Vec2& v) const {
 }
 
 template <typename T>
-Vec2<T> Vec2<T>::operator-=(const Vec2& v) {
+Vec2<T>& Vec2<T>::operator-=(const Vec2& v) {
     *this = *this - v;
 
     return *this;
 }
 
 template <typename T>
-Vec2<T> Vec2<T>::operator+=(const Vec2& v) {
+Vec2<T>& Vec2<T>::operator+=(const Vec2& v) {
     *this = *this + v;
 
     return *this;
@@ -119,7 +119,7 @@ Vec2<T> Vec2<T>::operator/(const T& t) const {
 }
 
 template <typename T>
-Vec2<T> Vec2<T>::operator/=(const T& t) {
+Vec2<T>& Vec2<T>::operator/=(const T& t) {
     *this = *this / t;
 
     return *this;
@@ -136,7 +136,7 @@ Vec2<T> Vec2<T>::operator*(const T& v) const {
 }
 
 template <typename T>
-Vec2<T> Vec2<T>::operator*=(const T& t){
+Vec2<T>& Vec2<T>::operator*=(const T& t){
     *this = *this * t;
     return *this;
 }
