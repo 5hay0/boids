@@ -11,6 +11,7 @@ namespace bd {
         Vec2<unit> pos;
         Vec2<unit> dir;
         unit speed;
+        unit speedLimit = 0.1;
         unit speedMax;
         unit r; //rayon de perception
 
@@ -46,6 +47,7 @@ namespace bd {
         int getBordureY();
         int getFear();
         void setR(unit newR);
+        unit getSpeedLimit();
     };
 }
 

@@ -69,31 +69,44 @@ void bd::Simulation::drawBoids() {
 
             // bordure management
             if (subjects.getBoids().get(i).getPos().getX()<30.f) {
-                Vec2<unit> newDir((subjects.getBoids().get(i).getDir().getX())*(-1),
+                if (subjects.getBoids().get(i).getDir().getX() < 0) { //je dois partir dans l'autre sens
+                    Vec2<unit> newDir((subjects.getBoids().get(i).getDir().getX())*(-1),
                                                 subjects.getBoids().get(i).getDir().getY());
-                subjects.getBoids().get(i/3).setDir(newDir);
-                subjects.getBoids().get(i).addBordureX(20);
+                    subjects.getBoids().get(i).setDir(newDir);
+                }
+                //sinon pas besoin de changer la direction
             }
             if (subjects.getBoids().get(i).getPos().getX()> settings.getWidthWindow()-15.f) {
-                Vec2<unit> newDir((subjects.getBoids().get(i).getDir().getX())*(-1),
-                                                subjects.getBoids().get(i).getDir().getY());
-                subjects.getBoids().get(i).setDir(newDir);
-                subjects.getBoids().get(i).addBordureX(20);
+                if (subjects.getBoids().get(i).getDir().getX() > 0) {
+                    Vec2<unit> newDir((subjects.getBoids().get(i).getDir().getX())*(-1),
+                                                   subjects.getBoids().get(i).getDir().getY());
+                    subjects.getBoids().get(i).setDir(newDir);
+                }
             }
             if (subjects.getBoids().get(i).getPos().getY()<30.f) {
-                Vec2<unit> newDir(subjects.getBoids().get(i).getDir().getX(),
+                if (subjects.getBoids().get(i).getDir().getY() < 0) {
+                    Vec2<unit> newDir(subjects.getBoids().get(i).getDir().getX(),
                                                 (subjects.getBoids().get(i).getDir().getY())*(-1));
-                subjects.getBoids().get(i).setDir(newDir);
-                subjects.getBoids().get(i).addBordureY(20);
+                    subjects.getBoids().get(i).setDir(newDir);
+                }
             }
             if (subjects.getBoids().get(i).getPos().getY()> settings.getHeightWindow()-15.f) {
-                Vec2<unit> newDir = Vec2<unit>(subjects.getBoids().get(i).getDir().getX(),
+                if (subjects.getBoids().get(i).getDir().getY() > 0) {
+                    Vec2<unit> newDir = Vec2<unit>(subjects.getBoids().get(i).getDir().getX(),
                                                 (subjects.getBoids().get(i).getDir().getY())*(-1));
-                subjects.getBoids().get(i).setDir(newDir);
-                subjects.getBoids().get(i).addBordureY(20);
+                    subjects.getBoids().get(i).setDir(newDir);
+                }
             }
 
+        //new speed
+        if (len > subjects.getBoids().get(i).getSpeedLimit()) { //si on va trop vite
+            subjects.getBoids().get(i).setSpeed(subjects.getBoids().get(i).getSpeed()+0.1);
+        }
+        else {
+            subjects.getBoids().get(i).setSpeed(subjects.getBoids().get(i).getSpeed()+len);
+        }
 
+        //new position
         Vec2<unit> pos(subjects.getBoids().get(i).getPos().getX()+
                 (subjects.getBoids().get(i).getDir().getX())*subjects.getBoids().get(i).getSpeed(),
             subjects.getBoids().get(i).getPos().getY()+
@@ -172,25 +185,41 @@ void bd::Simulation::drawPredators() {
 
         // bordure management
             if (predators.getBoids().get(i).getPos().getX()<=15.f) {
-                Vec2<unit> newDir(predators.getBoids().get(i).getDir().getX()*-1,
+                if (predators.getBoids().get(i).getDir().getX() < 0) {
+                    Vec2<unit> newDir(predators.getBoids().get(i).getDir().getX()*-1,
                                                 predators.getBoids().get(i).getDir().getY());
-                predators.getBoids().get(i/3).setDir(newDir);
+                    predators.getBoids().get(i).setDir(newDir);
+                }
             }
             if (predators.getBoids().get(i).getPos().getX()>= settings.getWidthWindow()-15.f) {
-                Vec2<unit> newDir(predators.getBoids().get(i).getDir().getX()*-1,
-                                                predators.getBoids().get(i).getDir().getY());
-                predators.getBoids().get(i).setDir(newDir);
+                if (predators.getBoids().get(i).getDir().getX() > 0) {
+                    Vec2<unit> newDir(predators.getBoids().get(i).getDir().getX()*-1,
+                                                    predators.getBoids().get(i).getDir().getY());
+                    predators.getBoids().get(i).setDir(newDir);
                 }
+            }
             if (predators.getBoids().get(i).getPos().getY()<=15.f) {
-                Vec2<unit> newDir(predators.getBoids().get(i).getDir().getX(),
-                                                predators.getBoids().get(i).getDir().getY()*-1);
-                predators.getBoids().get(i).setDir(newDir);
+                if (predators.getBoids().get(i).getDir().getY() < 0) {
+                    Vec2<unit> newDir(predators.getBoids().get(i).getDir().getX(),
+                                                    predators.getBoids().get(i).getDir().getY()*-1);
+                    predators.getBoids().get(i).setDir(newDir);
+                }
             }
             if (predators.getBoids().get(i).getPos().getY()>= settings.getHeightWindow()-15.f) {
-                Vec2<unit> newDir = Vec2<unit>(predators.getBoids().get(i).getDir().getX(),
-                                                predators.getBoids().get(i).getDir().getY()*(-1));
-                predators.getBoids().get(i).setDir(newDir);
+                if (predators.getBoids().get(i).getDir().getY() > 0) {
+                    Vec2<unit> newDir = Vec2<unit>(predators.getBoids().get(i).getDir().getX(),
+                                                    predators.getBoids().get(i).getDir().getY()*(-1));
+                    predators.getBoids().get(i).setDir(newDir);
                 }
+            }
+
+        //new speed
+        if (len > subjects.getBoids().get(i).getSpeedLimit()) { //si on va trop vite
+            subjects.getBoids().get(i).setSpeed(subjects.getBoids().get(i).getSpeed()+0.1);
+        }
+        else {
+            subjects.getBoids().get(i).setSpeed(subjects.getBoids().get(i).getSpeed()+len);
+        }
 
             //modify the visual
 

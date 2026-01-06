@@ -137,6 +137,11 @@ void bd::Boid::setR(unit newR) {
     this->r = newR;
 }
 
+unit bd::Boid::getSpeedLimit() {
+    return speedLimit;
+}
+
+
 
 
 
