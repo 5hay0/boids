@@ -67,36 +67,10 @@ void bd::Simulation::drawBoids() {
 
             subjects.getBoids().get(i).setDir(dir);
 
-            // bordure management
-            if (subjects.getBoids().get(i).getPos().getX()<30.f) {
-                if (subjects.getBoids().get(i).getDir().getX() < 0) { //je dois partir dans l'autre sens
-                    Vec2<unit> newDir((subjects.getBoids().get(i).getDir().getX())*(-1),
-                                                subjects.getBoids().get(i).getDir().getY());
-                    subjects.getBoids().get(i).setDir(newDir);
-                }
-                //sinon pas besoin de changer la direction
-            }
-            if (subjects.getBoids().get(i).getPos().getX()> settings.getWidthWindow()-15.f) {
-                if (subjects.getBoids().get(i).getDir().getX() > 0) {
-                    Vec2<unit> newDir((subjects.getBoids().get(i).getDir().getX())*(-1),
-                                                   subjects.getBoids().get(i).getDir().getY());
-                    subjects.getBoids().get(i).setDir(newDir);
-                }
-            }
-            if (subjects.getBoids().get(i).getPos().getY()<30.f) {
-                if (subjects.getBoids().get(i).getDir().getY() < 0) {
-                    Vec2<unit> newDir(subjects.getBoids().get(i).getDir().getX(),
-                                                (subjects.getBoids().get(i).getDir().getY())*(-1));
-                    subjects.getBoids().get(i).setDir(newDir);
-                }
-            }
-            if (subjects.getBoids().get(i).getPos().getY()> settings.getHeightWindow()-15.f) {
-                if (subjects.getBoids().get(i).getDir().getY() > 0) {
-                    Vec2<unit> newDir = Vec2<unit>(subjects.getBoids().get(i).getDir().getX(),
-                                                (subjects.getBoids().get(i).getDir().getY())*(-1));
-                    subjects.getBoids().get(i).setDir(newDir);
-                }
-            }
+        if (obstacles.getSize() != 0) {
+            obstacleManagement(subjects.getBoids().get(i));
+        }
+            borderManagement(subjects.getBoids().get(i));
 
         //new speed
         if (len > subjects.getBoids().get(i).getSpeedLimit()) { //si on va trop vite
@@ -183,42 +157,17 @@ void bd::Simulation::drawPredators() {
 
             predators.getBoids().get(i).setPos(pos);
 
-        // bordure management
-            if (predators.getBoids().get(i).getPos().getX()<=15.f) {
-                if (predators.getBoids().get(i).getDir().getX() < 0) {
-                    Vec2<unit> newDir(predators.getBoids().get(i).getDir().getX()*-1,
-                                                predators.getBoids().get(i).getDir().getY());
-                    predators.getBoids().get(i).setDir(newDir);
-                }
-            }
-            if (predators.getBoids().get(i).getPos().getX()>= settings.getWidthWindow()-15.f) {
-                if (predators.getBoids().get(i).getDir().getX() > 0) {
-                    Vec2<unit> newDir(predators.getBoids().get(i).getDir().getX()*-1,
-                                                    predators.getBoids().get(i).getDir().getY());
-                    predators.getBoids().get(i).setDir(newDir);
-                }
-            }
-            if (predators.getBoids().get(i).getPos().getY()<=15.f) {
-                if (predators.getBoids().get(i).getDir().getY() < 0) {
-                    Vec2<unit> newDir(predators.getBoids().get(i).getDir().getX(),
-                                                    predators.getBoids().get(i).getDir().getY()*-1);
-                    predators.getBoids().get(i).setDir(newDir);
-                }
-            }
-            if (predators.getBoids().get(i).getPos().getY()>= settings.getHeightWindow()-15.f) {
-                if (predators.getBoids().get(i).getDir().getY() > 0) {
-                    Vec2<unit> newDir = Vec2<unit>(predators.getBoids().get(i).getDir().getX(),
-                                                    predators.getBoids().get(i).getDir().getY()*(-1));
-                    predators.getBoids().get(i).setDir(newDir);
-                }
-            }
+        if (obstacles.getSize() != 0) {
+            obstacleManagement(predators.getBoids().get(i));
+        }
+        borderManagement(predators.getBoids().get(i));
 
         //new speed
-        if (len > subjects.getBoids().get(i).getSpeedLimit()) { //si on va trop vite
-            subjects.getBoids().get(i).setSpeed(subjects.getBoids().get(i).getSpeed()+0.1);
+        if (len > predators.getBoids().get(i).getSpeedLimit()) { //si on va trop vite
+            predators.getBoids().get(i).setSpeed(predators.getBoids().get(i).getSpeed()+0.1);
         }
         else {
-            subjects.getBoids().get(i).setSpeed(subjects.getBoids().get(i).getSpeed()+len);
+            predators.getBoids().get(i).setSpeed(predators.getBoids().get(i).getSpeed()+len);
         }
 
             //modify the visual
@@ -491,6 +440,118 @@ void bd::Simulation::drawSimulation() {
         window.display();
 
     }
+}
+
+void bd::Simulation::borderManagement(Boid &b) {
+    if (b.getPos().getX()<30.f) {
+        if (b.getDir().getX() < 0) { //je dois partir dans l'autre sens
+            Vec2<unit> newDir((b.getDir().getX())*(-1),b.getDir().getY());
+            b.setDir(newDir);
+        }
+        //sinon pas besoin de changer la direction
+    }
+    if (b.getPos().getX()> settings.getWidthWindow()-15.f) {
+        if (b.getDir().getX() > 0) {
+            Vec2<unit> newDir((b.getDir().getX())*(-1),b.getDir().getY());
+            b.setDir(newDir);
+        }
+    }
+    if (b.getPos().getY()<30.f) {
+        if (b.getDir().getY() < 0) {
+            Vec2<unit> newDir(b.getDir().getX(),(b.getDir().getY())*(-1));
+            b.setDir(newDir);
+        }
+    }
+    if (b.getPos().getY()> settings.getHeightWindow()-15.f) {
+        if (b.getDir().getY() > 0) {
+            Vec2<unit> newDir = Vec2<unit>(b.getDir().getX(),(b.getDir().getY())*(-1));
+            b.setDir(newDir);
+        }
+    }
+}
+
+void bd::Simulation::obstacleManagement(Boid& b) {
+
+        float radius = 50.f;
+
+        Vec2<unit> pos = b.getPos();
+        Vec2<unit> dir = b.getDir();
+        Vec2<unit> nega_dir = dir*-1;
+
+        for (int i = 0; i < obstacles.getSize(); i++) {
+
+            Vec2<unit> obs = obstacles.get(i);
+            double dx;
+            double dy;
+            double dist2;
+
+            if (dir.getX()>0) { //vers la droite
+                dx = obs.getX()-radius - b.getPos().getX()+dir.getX()+b.getR();
+            }
+            else { //vers la gauche
+                dx = obs.getX()+radius - b.getPos().getX()+dir.getX()+b.getR();
+            }
+
+            if (dir.getY()>0) { //vers le bas
+                dy = obs.getY()-radius - b.getPos().getY()+dir.getY()+b.getR();
+            }
+            else { //vers le haut
+                dy = obs.getY()+radius - b.getPos().getY()+dir.getY()+b.getR();
+            }
+
+            dist2 = dx*dx + dy*dy;
+
+            //std::cout<<"dist2:"<<dist2<<"\n";
+
+            if (dist2 <= b.getR() * b.getR() + radius*radius) {
+                double distmove_x;
+                double distmove_y;
+                double distmove;
+
+                if (dir.getX()>0) { //vers la droite
+                    distmove_x = obs.getX()-radius - b.getPos().getX()+(dir.getX()*2)+b.getR();
+                }
+                else { //vers la gauche
+                    distmove_x = obs.getX()+radius - b.getPos().getX()+(dir.getX()*2)+b.getR();
+                }
+
+                if (dir.getY()>0) { //vers le bas
+                    distmove_y = obs.getY()-radius - b.getPos().getY()+(dir.getY()*2)+b.getR();
+                }
+                else { //vers le haut
+                    distmove_y = obs.getY()+radius - b.getPos().getY()+(dir.getY()*2)+b.getR();
+                }
+
+                distmove = distmove_x*distmove_x + distmove_y*distmove_y;
+
+                // if I'm getting closer to obstacle
+                if (distmove<=dist2) {
+                    float x = (this->getRandomWithIntervale(5,15)-10.0f)/10.0f;
+                    float y = (this->getRandomWithIntervale(5,15)-10.0f)/10.0f;
+                    Vec2<unit> newDir((b.getDir().getX())+(-1*x),b.getDir().getY()+(-1*y));
+                    b.setDir(newDir);
+
+                    Vec2<unit> pos(b.getPos().getX()+(b.getDir().getX())*b.getSpeed(),
+                b.getPos().getY()+(b.getDir().getY())*b.getSpeed());
+                    b.setPos(pos);
+                }
+            }
+    }
+}
+
+float bd::Simulation::getRandomWithIntervale(int maxFirst, int minSecond) {
+    float result = 0.0f;
+
+    //select interval
+    if (rand() % 2 == 0)
+    {
+        result = rand() % maxFirst;
+    }
+    else
+    {
+        result = minSecond + rand() % maxFirst;
+    }
+    return result;
 }
 
 bd::Simulation::~Simulation() {

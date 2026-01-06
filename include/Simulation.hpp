@@ -29,7 +29,7 @@ namespace bd {
 
     class Simulation {
 
-    public:
+
         Settings settings;
         sf::RenderWindow window;
 
@@ -42,6 +42,7 @@ namespace bd {
         Alignment alignment;
         Fuite fuite;
 
+    public:
 
         Simulation(Settings s);
         ~Simulation();
@@ -51,6 +52,14 @@ namespace bd {
         void drawObstacles();
         void drawInstructions();
         void drawSimulation();
+
+        void borderManagement(Boid& b);
+
+        float getRandomWithIntervale(int max_first, int min_second);
+
+        void obstacleManagement(Boid& b);
+
+
 
         void reset();
 
