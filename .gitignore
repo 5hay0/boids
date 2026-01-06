@@ -5,4 +5,5 @@ boids
 .vscode/settings.json
 unit_tests
 .vscode/*
+asset/*
 
