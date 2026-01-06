@@ -37,5 +37,12 @@ namespace bd {
         Alignment(const double&);
         Vec2<unit> apply(const Boid&, const Flock&) const;
     };
+
+    class Fuite : public Rule {
+    public:
+        Fuite();
+        Fuite(const double&);
+        Vec2<unit> apply(const Boid&, const Flock&) const;
+    };
 }
 #endif

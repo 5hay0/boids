@@ -58,6 +58,7 @@ Vec2<unit> bd::Separation::apply(const Boid& b, const Flock& f) const {
     if(countTotal == 0){
         return vRes;
     }
+
     for(size_t i = 0; i < nei.getSize();i++){
         Vec2<unit> diff = b.getPos() - nei.get(i).getPos();
         double dist2 = diff.getX()*diff.getX() + diff.getY()*diff.getY();
@@ -68,17 +69,13 @@ Vec2<unit> bd::Separation::apply(const Boid& b, const Flock& f) const {
             count += 1;
         }
     }
-    //normalisation
-    double len = sqrt(vRes.getX()*vRes.getX() + vRes.getY()*vRes.getY());
+    //normalisation dans affichage
 
     if (count == 0) {
         // on a aucun voisin trop proche
         return vRes;
     }
     vRes /= count;
-    if (len > 0) {
-        vRes = vRes / len;
-    }
 
     return vRes * weight;
 }
@@ -125,10 +122,41 @@ Vec2<unit> bd::Alignment::apply(const Boid& b, const Flock& f) const {
     //moyenne
     vRes /= count;
 
-    //normalisation
-    double len = sqrt(vRes.getX()*vRes.getX() + vRes.getY()*vRes.getY());
-    if (len > 0)
-        vRes = vRes / len;
+    //normalisation faite dans l'affichage
 
     return vRes * weight;
+}
+
+bd::Fuite::Fuite() {
+    weight = 1.0;
+}
+
+bd::Fuite::Fuite(const double &w) {
+    weight = w;
+    if(weight < 0){
+        weight = 0;
+    }
+    if(weight > 1){
+        weight = 1;
+    }
+}
+
+Vec2<unit> bd::Fuite::apply(const Boid &b, const Flock &f) const {
+    Vec2<unit> vRes(0,0);
+    DynamicArray<Boid> nei = f.getNeighbours(b);
+
+    int count = nei.getSize();
+    if (count == 0) {
+        return vRes;
+    }
+    for(size_t i = 0; i < count; i++) {
+
+        double dx = nei.get(i).getPos().getX() - b.getPos().getX();
+        double dy = nei.get(i).getPos().getY() - b.getPos().getY();
+
+        //la direction vers le présateur
+        Vec2<unit> run(dx,dy);
+        vRes += run;
+    }
+    return vRes/count;
 }

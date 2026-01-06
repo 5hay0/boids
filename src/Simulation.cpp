@@ -4,6 +4,7 @@
 
 #include "../include/Simulation.hpp"
 
+#include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
 
@@ -16,6 +17,7 @@ bd::Simulation::Simulation(Settings s) {
     cohesion = Cohesion(settings.getWC());
     separation = Separation(settings.getWS());
     alignment = Alignment(settings.getWA());
+    fuite = Fuite();
 
     //init all flock / DynamicArray
     subjects = Flock(settings.getNbBoids(),20);
@@ -51,6 +53,11 @@ void bd::Simulation::drawBoids() {
                     alignmentVec.getY()+
                     separationVec.getY()
                     );
+
+            Vec2<unit> runVec = fuite.apply(subjects.getBoids().get(i),predators);
+            if (runVec.getX() != 0 || runVec.getY()) { //si il y a un ou plus prédateur
+                dir = runVec*-1; //je cours dans le sens oposé
+            }
 
             //normalisation de distance
             double len = sqrt(dir.getX()*dir.getX() + dir.getY()*dir.getY());
@@ -251,12 +258,26 @@ void bd::Simulation::drawInstructions() {
     message.operator+=("Remove to distance: LControl + D \n");
     message.operator+=("Distance between Boid:"+std::to_string(subjects.getDistance())+"\n");
 
+    message.operator+=("Add obstacle: RClick \n");
+    message.operator+=("Remove last obstacle: Echap \n");
+
     message.operator+=("\n");
 
     text.setString(message);
     text.setCharacterSize(15);
 
     window.draw(text);
+}
+
+void bd::Simulation::drawObstacles() {
+    for (int i=0; i<obstacles.getSize();i++) {
+        sf::CircleShape shape(30);
+        shape.setOrigin({0.f, 0.f});
+        shape.setPosition({obstacles.get(i).getX(),obstacles.get(i).getY()});
+        shape.setFillColor(sf::Color::Magenta);
+
+        window.draw(shape);
+    }
 }
 
 
@@ -268,6 +289,7 @@ void bd::Simulation::drawSimulation() {
     sf::View simulation = window.getDefaultView();
     simulation.setViewport({{0.0f,0.0f},{1.0f,1.0f}});
 
+    //Si la touche/souris correspondant(e) à l'action est préssé(e)
     bool addPressed = false;
     bool removePressed = false;
 
@@ -281,6 +303,9 @@ void bd::Simulation::drawSimulation() {
     bool rPressed = false;
     bool distancePressed = false;
 
+    bool obstaclePressed = false;
+    bool clickPressed = false;
+
     while (window.isOpen()) {
         // check all the window's events that were triggered since the last iteration of the loop
         while (const std::optional event = window.pollEvent())
@@ -290,6 +315,12 @@ void bd::Simulation::drawSimulation() {
                 window.close();
             }
         }
+
+        /**
+         *  Chaque if qui va suivre a été écrite pour forcer la génération par "appuie de touche"
+         *  au lieu du "pour chaque frame appuyé" qui est l'option par défaut
+         **/
+
 
         //add boid
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LAlt) &&
@@ -326,6 +357,7 @@ void bd::Simulation::drawSimulation() {
             }
 
         ///RULES///
+
         //add weight to alignment
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LAlt) &&
             sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A) &&
@@ -389,6 +421,19 @@ void bd::Simulation::drawSimulation() {
             subjects.addDistance(-1);
             }
 
+        //add an obstacle where we clicked
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && (!clickPressed))
+        {
+            sf::Vector2i localPosition = sf::Mouse::getPosition(window);
+            Vec2<unit> obstacle(localPosition.x,localPosition.y);
+            obstacles.add(obstacle);
+        }
+        //remove last obstacle
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::O) &&(!obstaclePressed)) {
+            std::cout<<"O pressed \n";
+            obstacles.removeLast();
+        }
+
         addPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LAlt);
         removePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LControl);
 
@@ -402,12 +447,16 @@ void bd::Simulation::drawSimulation() {
         rPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::R);
         distancePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D);
 
+        obstaclePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::O);
+        clickPressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
         window.clear();
         window.setView(simulation);
 
+        drawObstacles();
         drawBoids();
         drawPredators();
+
         drawInstructions();
 
         window.display();

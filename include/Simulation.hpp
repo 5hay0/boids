@@ -40,7 +40,7 @@ namespace bd {
         Cohesion cohesion;
         Separation separation;
         Alignment alignment;
-
+        Fuite fuite;
 
 
         Simulation(Settings s);
