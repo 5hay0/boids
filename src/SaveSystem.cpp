@@ -21,6 +21,7 @@ void bd::SaveSystem::createSave(Simulation* s) {
     std::ofstream file(path); // create OR overwrite
     if (!file) {
         // erreor (invalid path, rights...)
+        std::cout<<"Error save\n";
         return;
     }
 
@@ -83,7 +84,7 @@ void bd::SaveSystem::createSave(Simulation* s) {
         }
     }
 
-    std::cout<<"Sauvegarde terminé \n";
+    std::cout<<"Sauvegarde terminee \n";
 }
 
 

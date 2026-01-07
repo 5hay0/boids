@@ -7,7 +7,7 @@
 namespace bd {
 
     class SaveSystem {
-        std::string filemway = "save/";
+        std::string filemway = "../save/";
 
     public:
         /**
