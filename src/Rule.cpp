@@ -70,10 +70,10 @@ Vec2<unit> bd::Separation::apply(const Boid& b, const Flock& f) const {
             count += 1;
         }
     }
-    //normalisation dans affichage
+    //normalisation in simulation
 
     if (count == 0) {
-        // on a aucun voisin trop proche
+        // no neighbours too close
         return vRes;
     }
     vRes /= count;
@@ -152,10 +152,10 @@ Vec2<unit> bd::Fuite::apply(const Boid &b, const Flock &f) const {
     }
     for(size_t i = 0; i < count; i++) {
 
-        double dx = nei.get(i).getPos().getX() - b.getPos().getX();
-        double dy = nei.get(i).getPos().getY() - b.getPos().getY();
+        double dx = (nei.get(i).getPos().getX() - b.getPos().getX())*-1;
+        double dy = (nei.get(i).getPos().getY() - b.getPos().getY())*-1;
 
-        //la direction vers le présateur
+        //predator direction
         Vec2<unit> run(dx,dy);
         vRes += run;
     }

@@ -57,8 +57,8 @@ void bd::Simulation::drawBoids() {
                     );
 
             Vec2<unit> runVec = fuite.apply(subjects.getBoids().get(i),predators);
-            if (runVec.getX() != 0 || runVec.getY()) { //si il y a un ou plus prédateur
-                dir = runVec*-1; //je cours dans le sens oposé
+            if (runVec.getX() != 0 || runVec.getY()) { //If one or more predator
+                dir = runVec;
             }
 
             //normalisation de distance
