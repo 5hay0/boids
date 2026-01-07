@@ -1,0 +1,17 @@
+SAVE
+
+WINDOW DIMENTION
+width 800
+height 600
+BOIDS
+count 1
+boid 773.328 399.193 0.99958 -0.0289878 1 1 4.37373e-41
+PREDATORS
+count 1
+predator 506.658 246.452 -0.707107 -0.707107
+OBSTACLES
+count 4
+obstacles 263 2.24208e-44
+obstacles 206 2.24208e-44
+obstacles 6 1.96182e-44
+obstacles 129 1.96182e-44

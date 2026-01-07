@@ -1,4 +1,5 @@
 #include "../include/Rule.hpp"
+#include <cmath>
 
 
 bd::Cohesion::Cohesion() {

@@ -18,7 +18,8 @@ SRC = main.cpp \
       $(SRCDIR)/Rule.cpp \
       $(SRCDIR)/Flock.cpp \
       $(SRCDIR)/Settings.cpp \
-	  $(SRCDIR)/Simulation.cpp
+	  $(SRCDIR)/Simulation.cpp \
+	  $(SRCDIR)/SaveSystem.cpp
 
 OBJ = $(SRC:%.cpp=$(OBJDIR)/%.o)
 

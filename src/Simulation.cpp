@@ -8,6 +8,7 @@
 #include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
+#include <cmath>
 
 
 bd::Simulation::Simulation(Settings s) {
@@ -205,7 +206,7 @@ void bd::Simulation::drawPredators() {
 }
 
 void bd::Simulation::drawInstructions() {
-    sf::Font font("../asset/font/Roboto-Regular.ttf"); //obligatory
+    sf::Font font("asset/font/Roboto-Regular.ttf"); //obligatory
     sf::Text text(font);
 
     sf::String message = "Add Boid: LAlt + B \n";
