@@ -239,6 +239,9 @@ void bd::Simulation::drawInstructions() {
     message.operator+=("Add obstacle: RClick \n");
     message.operator+=("Remove last obstacle: Echap \n");
 
+    message.operator+=("Save: W \n");
+    message.operator+=("Load: L \n");
+
     message.operator+=("\n");
 
     text.setString(message);
