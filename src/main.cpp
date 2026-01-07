@@ -1,11 +1,7 @@
-#include "include/Settings.hpp"
-
-#include "Simulation.hpp"
-
+#include "../include/Settings.hpp"
+#include "../include/Simulation.hpp"
 
 using namespace bd;
-
-
 
 int main() {
 

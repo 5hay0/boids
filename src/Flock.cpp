@@ -61,4 +61,7 @@ void bd::Flock::addR(unit d) {
     }
 }
 
+void bd::Flock::clearBoid() {
+    this->getBoids().clear();
+}
 

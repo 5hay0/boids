@@ -15,6 +15,7 @@ namespace bd {
         void addWeight(){if (weight + 0.01f > 1) weight = 1; else weight+= 0.01f;};
         void removeWeight(){if (weight - 0.01f<0) weight = 0; else weight-= 0.01f;};
         double getWeight(){return weight;};
+        void setWeight(float& f){if (f > 1) weight = 1; else if (f<0) weight= 0; else weight = f;};
     };
 
     class Cohesion : public Rule {
