@@ -7,6 +7,9 @@ bd::Flock::Flock(const int& nbBoids, const unit& d, const unit& b_r) : boids(nbB
     this-> boid_r = b_r;
 }
 
+bd::Flock::~Flock() {}
+
+
 void bd::Flock::addBoid(const Boid& b){
     boids.add(b);
 }
@@ -30,7 +33,6 @@ DynamicArray<bd::Boid> bd::Flock::getNeighbours(const Boid& b) const {
         double dist2 = dx*dx + dy*dy;
 
         if (dist2 < b.getR() * b.getR()) {
-            //other.getPos()<<(std::cout<<"getNeighbours, other pos:");
             nei.add(other);
         }
     }
