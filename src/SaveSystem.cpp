@@ -18,9 +18,9 @@ void bd::SaveSystem::createSave(Simulation* s) {
     std::getline(std::cin, save);
     std::string path =filemway+save+".txt";
 
-    std::ofstream file(path); // crée OU écrase
+    std::ofstream file(path); // create OR overwrite
     if (!file) {
-        // erreur (chemin invalide, droits...)
+        // erreor (invalid path, rights...)
         return;
     }
 
@@ -82,6 +82,8 @@ void bd::SaveSystem::createSave(Simulation* s) {
                 << b.getX() << " " << b.getY() << "\n";  // position
         }
     }
+
+    std::cout<<"Sauvegarde terminé \n";
 }
 
 
