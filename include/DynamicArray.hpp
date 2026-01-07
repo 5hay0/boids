@@ -30,6 +30,7 @@ public:
     size_t getSize() const;
     T& get(size_t);
     const T& get(size_t) const;
+    void clear();
 
     void removeLast();
 };
@@ -72,6 +73,11 @@ DynamicArray<T> &DynamicArray<T>::operator=(const DynamicArray &other) {
     return *this;
 }
 
+template<typename T>
+void DynamicArray<T>::clear() {
+    delete[] data;
+    data = new T[capacity];
+}
 
 template <typename T>
 DynamicArray<T>::~DynamicArray() {
@@ -97,7 +103,6 @@ void DynamicArray<T>::add(const T &value) {
     }
     data[size] = value;
     size = size+1;
-
 }
 
 template<typename T>

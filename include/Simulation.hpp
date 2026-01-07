@@ -59,9 +59,29 @@ namespace bd {
 
         void obstacleManagement(Boid& b);
 
+        Settings getSettings(){return settings;}
 
+        void setSettings(Settings& s){settings = s;};
 
-        void reset();
+        sf::Vector2u getWindowDimention(){return this->window.getSize();};
+        void setWindowDimention(const Vec2<float> & v){this->window.setSize({(unsigned)v.getX(),(unsigned)v.getY()});};
+
+        Flock getSubjects(){return this->subjects;};
+        void setSubjects(Flock &f){this->subjects = f;};
+
+        Flock getPredators(){return predators;};
+        void setpredators(Flock &f){this->predators = f;};
+
+        DynamicArray<Vec2<unit>> getObstacles(){return obstacles;};
+        void setObstacles(DynamicArray<Vec2<unit>>& o){obstacles = o;};
+
+        Cohesion getCohesion(){return cohesion.getWeight();};
+        void setCohesion(float& f){cohesion.setWeight(f);};
+        Separation getSeparation(){return separation.getWeight();};
+        void setSeparation(float& f){separation.setWeight(f);};
+        Alignment getAlignment(){alignment.getWeight();};
+        void setAligment(float& f){alignment.setWeight(f);};
+
 
     };
 }

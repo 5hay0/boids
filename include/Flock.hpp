@@ -21,6 +21,8 @@ namespace bd {
         unit getDistance() const;
         void addDistance(unit d);
 
+        void clearBoid();
+
         unit getR() const;
         void addR(unit d);
     };

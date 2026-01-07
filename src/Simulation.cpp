@@ -4,6 +4,7 @@
 
 #include "../include/Simulation.hpp"
 
+#include "../include/SaveSystem.hpp"
 #include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
@@ -125,8 +126,7 @@ void bd::Simulation::drawBoids() {
 void bd::Simulation::drawPredators() {
     constexpr unit PI = 3.14159265358979323846; //for the rotation of the boid because the variable can be undefined on Windows
 
-    for (std::size_t i = 0; i < predators.getBoids().getSize(); i ++)
-            {
+    for (std::size_t i = 0; i < predators.getBoids().getSize(); i ++){
                 //apply rules
                 Vec2<unit> cohestionVec = cohesion.apply(predators.getBoids().get(i),predators);
                 Vec2<unit> alignmentVec = alignment.apply(predators.getBoids().get(i),predators);
@@ -239,6 +239,9 @@ void bd::Simulation::drawInstructions() {
     message.operator+=("Add obstacle: RClick \n");
     message.operator+=("Remove last obstacle: Echap \n");
 
+    message.operator+=("Save: W \n");
+    message.operator+=("Load: L \n");
+
     message.operator+=("\n");
 
     text.setString(message);
@@ -260,6 +263,9 @@ void bd::Simulation::drawObstacles() {
 
 
 void bd::Simulation::drawSimulation() {
+
+    SaveSystem save_system = SaveSystem();
+
     unsigned width = settings.getWidthWindow();
     unsigned height = settings.getHeightWindow();
     window.create(sf::VideoMode({width,height}), "My window"); //800 by 600
@@ -283,6 +289,9 @@ void bd::Simulation::drawSimulation() {
 
     bool obstaclePressed = false;
     bool clickPressed = false;
+
+    bool savePressed = false;
+    bool loadPressed = false;
 
     while (window.isOpen()) {
         // check all the window's events that were triggered since the last iteration of the loop
@@ -403,14 +412,29 @@ void bd::Simulation::drawSimulation() {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && (!clickPressed))
         {
             sf::Vector2i localPosition = sf::Mouse::getPosition(window);
-            Vec2<unit> obstacle(localPosition.x,localPosition.y);
-            obstacles.add(obstacle);
+            if ((localPosition.x > -1 && localPosition.x < width)&&
+                (localPosition.y > -1 && localPosition.y < height)
+                ){
+                Vec2<unit> obstacle(localPosition.x,localPosition.y);
+                obstacles.add(obstacle);
+            }
         }
         //remove last obstacle
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::O) &&(!obstaclePressed)) {
             std::cout<<"O pressed \n";
             obstacles.removeLast();
         }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W)&&
+            (!savePressed)) {
+            std::cout<<"Save Pressed \n";
+            save_system.createSave(this);
+            }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::L)&&(!loadPressed)) {
+            save_system.loadSave(this);
+            obstacles = this->getObstacles();
+            }
 
         addPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LAlt);
         removePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LControl);
@@ -427,6 +451,9 @@ void bd::Simulation::drawSimulation() {
 
         obstaclePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::O);
         clickPressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+
+        savePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W);
+        loadPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::L);
 
         window.clear();
         window.setView(simulation);
