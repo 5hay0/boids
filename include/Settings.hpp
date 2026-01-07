@@ -7,12 +7,33 @@ namespace bd{
         int nbBoids;
         int widthWindow;
         int heightWindow;
+        /**
+         * Max speed of a Boid
+         */
         float vmax;
+        /**
+         * limitSpeed of a Boid
+         */
         float amax;
+        /**
+         * Ray of perception of Boids
+         */
         float pixelR;
+        /**
+         * Distance between Boids
+         */
         float distMin;
+        /**
+         * weight of Cohesion rule
+         */
         float wC;
+        /**
+         * weight of Alignment rule
+         */
         float wA;
+        /**
+         * weight of Separation rule
+         */
         float wS;
 
         template <typename T>
@@ -24,10 +45,13 @@ namespace bd{
         int getNbBoids() const;
         int getWidthWindow() const;
         int getHeightWindow() const;
+
         float getVMax() const;
         float getAMax() const;
+
         float getPixelR() const;
         float getDistMin() const;
+
         float getWC() const;
         float getWA() const;
         float getWS() const;
@@ -35,6 +59,7 @@ namespace bd{
         void setNbBoids(const int&);
         void setPixelR(const float&);
         void setDistMin(const float&);
+
         void setWC(const float&);
         void setWA(const float&);
         void setWS(const float&);
