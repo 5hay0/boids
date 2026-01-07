@@ -35,7 +35,6 @@ bd::Simulation::Simulation(Settings s) {
     sf::RenderWindow window;
 }
 
-//TODO : corriger bordure des Boids
 void bd::Simulation::drawBoids() {
     constexpr unit PI = 3.14159265358979323846; //for the rotation of the boid because the variable can be undefined on Windows
 
@@ -75,7 +74,7 @@ void bd::Simulation::drawBoids() {
             borderManagement(subjects.getBoids().get(i));
 
         //new speed
-        if (len > subjects.getBoids().get(i).getSpeedLimit()) { //si on va trop vite
+        if (len > subjects.getBoids().get(i).getSpeedLimit()) { //if too fast
             subjects.getBoids().get(i).setSpeed(subjects.getBoids().get(i).getSpeed()+0.1);
         }
         else {
@@ -101,7 +100,7 @@ void bd::Simulation::drawBoids() {
 
             convex.setFillColor(sf::Color::Green);
 
-            // Origine au centre sinon le boid tourne autour d'un coin
+            // Origin at center else boid turn around a corner
             convex.setOrigin({0.f, 0.f});
 
             convex.setPosition({subjects.getBoids().get(i).getPos().getX(),subjects.getBoids().get(i).getPos().getY()});
@@ -139,7 +138,7 @@ void bd::Simulation::drawPredators() {
                     separationVec.getY()
                     );
 
-            //normalisation de distance
+            //normalisation of distance
             double len = sqrt(dir.getX()*dir.getX() + dir.getY()*dir.getY());
             if (len > 0) {
                 dir = dir / len;
@@ -155,7 +154,7 @@ void bd::Simulation::drawPredators() {
         borderManagement(predators.getBoids().get(i));
 
         //new speed
-        if (len > predators.getBoids().get(i).getSpeedLimit()) { //si on va trop vite
+        if (len > predators.getBoids().get(i).getSpeedLimit()) { //if too fast
             predators.getBoids().get(i).setSpeed(predators.getBoids().get(i).getSpeed()+0.1);
         }
         else {
@@ -177,7 +176,7 @@ void bd::Simulation::drawPredators() {
 
             convex.setFillColor(sf::Color::Red);
 
-            // Origine au centre sinon le boid tourne autour d'un coin
+            // Origin of center else boid turn around a corner
             convex.setOrigin({0.f, 0.f});
 
             convex.setPosition({predators.getBoids().get(i).getPos().getX(),predators.getBoids().get(i).getPos().getY()});
@@ -234,8 +233,6 @@ void bd::Simulation::drawInstructions() {
     message.operator+=("Save: W \n");
     message.operator+=("Load: L \n");
 
-    message.operator+=("\n");
-
     text.setString(message);
     text.setCharacterSize(15);
 
@@ -265,7 +262,7 @@ void bd::Simulation::drawSimulation() {
     sf::View simulation = window.getDefaultView();
     simulation.setViewport({{0.0f,0.0f},{1.0f,1.0f}});
 
-    //Si la touche/souris correspondant(e) à l'action est préssé(e)
+    //If key/mouse pressed
     bool addPressed = false;
     bool removePressed = false;
 
@@ -296,8 +293,8 @@ void bd::Simulation::drawSimulation() {
         }
 
         /**
-         *  Chaque if qui va suivre a été écrite pour forcer la génération par "appuie de touche"
-         *  au lieu du "pour chaque frame appuyé" qui est l'option par défaut
+         *  All if that follow were written to force creation each key/mouse pressed
+         *  instead of "for each frame it was pressed" by default
          **/
 
 
@@ -305,10 +302,10 @@ void bd::Simulation::drawSimulation() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LAlt) &&
             sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::B) &&
                 (!addPressed || !boidPressed)){
-            //dernière vérification pour éviter d'ajouter à chaque frame
+            //last check is for avoiding adding for each frame
 
-            Vec2<unit> v(rand()%((int)(width)),rand()%height); //génére position random dans la fenêtre
-            Vec2<unit> dir(1,1); //revoir dir avec Marine
+            Vec2<unit> v(rand()%((int)(width)),rand()%height); //generate random position in window
+            Vec2<unit> dir(1,1);
             subjects.addBoid(Boid(v,dir,0.1,1,50));
                 }
         //remove boid
@@ -322,9 +319,9 @@ void bd::Simulation::drawSimulation() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LAlt) &&
             sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::P) &&
                 (!addPressed || !predatorPressed)){
-            //dernière vérification pour éviter d'ajouter à chaque frame
+            //last check is for avoiding adding for each frame
 
-            Vec2<unit> v(rand()%((int)(width)),rand()%height); //génére position random dans la fenêtre
+            Vec2<unit> v(rand()%((int)(width)),rand()%height); //generate random position in window
             Vec2<unit> dir(1,1);
             predators.addBoid(Boid(v,dir,0.1,1,50));
                 }
@@ -416,18 +413,19 @@ void bd::Simulation::drawSimulation() {
             std::cout<<"O pressed \n";
             obstacles.removeLast();
         }
-
+        //create a save
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W)&&
             (!savePressed)) {
             std::cout<<"Save Pressed \n";
             save_system.createSave(this);
             }
-
+        //load a save
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::L)&&(!loadPressed)) {
             save_system.loadSave(this);
             obstacles = this->getObstacles();
             }
 
+        //check if key/mouse if still pressed
         addPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LAlt);
         removePressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::LControl);
 
@@ -463,11 +461,11 @@ void bd::Simulation::drawSimulation() {
 
 void bd::Simulation::borderManagement(Boid &b) {
     if (b.getPos().getX()<30.f) {
-        if (b.getDir().getX() < 0) { //je dois partir dans l'autre sens
+        if (b.getDir().getX() < 0) { //need to go the other way
             Vec2<unit> newDir((b.getDir().getX())*(-1),b.getDir().getY());
             b.setDir(newDir);
         }
-        //sinon pas besoin de changer la direction
+        //else it's ok
     }
     if (b.getPos().getX()> settings.getWidthWindow()-15.f) {
         if (b.getDir().getX() > 0) {
@@ -504,40 +502,38 @@ void bd::Simulation::obstacleManagement(Boid& b) {
             double dy;
             double dist2;
 
-            if (dir.getX()>0) { //vers la droite
+            if (dir.getX()>0) { //to the right
                 dx = obs.getX()-radius - b.getPos().getX()+dir.getX()+b.getR();
             }
-            else { //vers la gauche
+            else { //to the left
                 dx = obs.getX()+radius - b.getPos().getX()+dir.getX()+b.getR();
             }
 
-            if (dir.getY()>0) { //vers le bas
+            if (dir.getY()>0) { //down
                 dy = obs.getY()-radius - b.getPos().getY()+dir.getY()+b.getR();
             }
-            else { //vers le haut
+            else { //up
                 dy = obs.getY()+radius - b.getPos().getY()+dir.getY()+b.getR();
             }
 
             dist2 = dx*dx + dy*dy;
-
-            //std::cout<<"dist2:"<<dist2<<"\n";
 
             if (dist2 <= b.getR() * b.getR() + radius*radius) {
                 double distmove_x;
                 double distmove_y;
                 double distmove;
 
-                if (dir.getX()>0) { //vers la droite
+                if (dir.getX()>0) { //right
                     distmove_x = obs.getX()-radius - b.getPos().getX()+(dir.getX()*2)+b.getR();
                 }
-                else { //vers la gauche
+                else { //left
                     distmove_x = obs.getX()+radius - b.getPos().getX()+(dir.getX()*2)+b.getR();
                 }
 
-                if (dir.getY()>0) { //vers le bas
+                if (dir.getY()>0) { //down
                     distmove_y = obs.getY()-radius - b.getPos().getY()+(dir.getY()*2)+b.getR();
                 }
-                else { //vers le haut
+                else { //up
                     distmove_y = obs.getY()+radius - b.getPos().getY()+(dir.getY()*2)+b.getR();
                 }
 
@@ -545,6 +541,7 @@ void bd::Simulation::obstacleManagement(Boid& b) {
 
                 // if I'm getting closer to obstacle
                 if (distmove<=dist2) {
+                    //new random direction away from obstacle
                     float x = (this->getRandomWithIntervale(5,15)-10.0f)/10.0f;
                     float y = (this->getRandomWithIntervale(5,15)-10.0f)/10.0f;
                     Vec2<unit> newDir((b.getDir().getX())+(-1*x),b.getDir().getY()+(-1*y));
