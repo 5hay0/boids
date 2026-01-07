@@ -83,12 +83,8 @@ void bd::Simulation::drawBoids() {
         }
 
         //new position
-        Vec2<unit> pos(subjects.getBoids().get(i).getPos().getX()+
-                (subjects.getBoids().get(i).getDir().getX())*subjects.getBoids().get(i).getSpeed(),
-            subjects.getBoids().get(i).getPos().getY()+
-            (subjects.getBoids().get(i).getDir().getY())*subjects.getBoids().get(i).getSpeed());
 
-        subjects.getBoids().get(i).setPos(pos);
+        subjects.getBoids().get(i).update();
 
             //modify the visual
 
@@ -151,12 +147,7 @@ void bd::Simulation::drawPredators() {
 
             predators.getBoids().get(i).setDir(dir);
 
-            Vec2<unit> pos(predators.getBoids().get(i).getPos().getX()+
-                (predators.getBoids().get(i).getDir().getX())*predators.getBoids().get(i).getSpeed(),
-            predators.getBoids().get(i).getPos().getY()+
-            (predators.getBoids().get(i).getDir().getY())*predators.getBoids().get(i).getSpeed());
-
-            predators.getBoids().get(i).setPos(pos);
+        predators.getBoids().get(i).update();
 
         if (obstacles.getSize() != 0) {
             obstacleManagement(predators.getBoids().get(i));
@@ -189,7 +180,7 @@ void bd::Simulation::drawPredators() {
             // Origine au centre sinon le boid tourne autour d'un coin
             convex.setOrigin({0.f, 0.f});
 
-            convex.setPosition({pos.getX(),pos.getY()});
+            convex.setPosition({predators.getBoids().get(i).getPos().getX(),predators.getBoids().get(i).getPos().getY()});
 
             float angleDeg = std::atan2(predators.getBoids().get(i).getDir().getY(),
                 predators.getBoids().get(i).getDir().getX()) * 180.f / PI;
